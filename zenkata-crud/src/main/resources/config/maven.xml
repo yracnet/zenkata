@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+group/name/version
+-->
+<result-group>
+    <result-file name="pom" type="xml" dir="">
+        RAIZ
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-model">
+        MODEL
+    </result-file>
+    <% 
+    
+    managerList.each {
+    %>
+    <result-file name="pom" type="xml" dir="${name}-${it}">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-api">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-logic">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-impl">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-faces">
+    </result-file>
+    <% } 
+    providerList.each {
+    %>
+    <result-file name="pom" type="xml" dir="${name}-${it}">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-api">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-logic">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-rest">
+    </result-file>
+    <result-file name="pom" type="xml" dir="${name}-${it}/${name}-${it}-faces">
+    </result-file>
+    <% } %>
+</result-group>
