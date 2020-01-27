@@ -12,11 +12,10 @@ import javax.xml.bind.JAXBException;
 
 /**
  *
- * @author yracnet
+ * @author Willyams Yujra
  */
 public class Test02 {
-
-    public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws JAXBException {
         ResultReader resultReader = new ResultReaderImpl();
 
         String xmls[] = new String[]{

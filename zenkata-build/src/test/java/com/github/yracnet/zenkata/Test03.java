@@ -7,11 +7,10 @@ package com.github.yracnet.zenkata;
 
 /**
  *
- * @author yracnet
+ * @author Willyams Yujra
  */
 public class Test03 {
-
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         String xmls[] = new String[]{
             "<result-file name=\"name\"><![CDATA[<a>a</a> ]]></result-file>",
             "<result-file name='name'><![CDATA[<a>a</a> ]]></result-file>",

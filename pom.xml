@@ -14,5 +14,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <owner>Willyams Yujra</owner>
+        <email>yracnet@gmail.com</email>
     </properties>
+    <inceptionYear>2020</inceptionYear>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.yracnet.maven</groupId>
+                <artifactId>qualitycode-maven-plugin</artifactId>
+                <version>0.1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>                        
+                    </execution>
+                </executions>
+                <configuration>
+                    <skipAnalyzer>true</skipAnalyzer>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -11,11 +11,10 @@ import java.util.Map;
 
 /**
  *
- * @author yracnet
+ * @author Willyams Yujra
  */
 public class Test01 {
-
-    public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 
         Map<String, Object> values = new HashMap<>();
         values.put("a", 1);
