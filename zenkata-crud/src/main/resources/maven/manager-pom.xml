@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+def _groupId  = "${ctx.group}.${ctx.name}"
+def _version  = "${ctx.version}"
+def _name  = "${ctx.name}"
+%>
+<result-group>
+    <% ctx.managerList.each { %>
+    <result-group dir="${_name}-${it}">
+        <result-file name="pom" type="xml" dir=".">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <parent>
+                    <groupId>${_groupId}</groupId>
+                    <artifactId>${_name}</artifactId>
+                    <version>${_version}</version>
+                </parent>
+                <artifactId>${_name}-${it}</artifactId>
+                <packaging>pom</packaging>
+                <modules>
+                    <module>${_name}-${it}-api</module>
+                    <module>${_name}-${it}-logic</module>
+                    <module>${_name}-${it}-impl</module>
+                    <module>${_name}-${it}-faces</module>
+                    <!--module>${_name}-${it}-react</module-->
+                </modules>
+            </project>
+        </result-file>
+        <result-file name="pom" type="xml" dir="${_name}-${it}-api">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <parent>
+                    <groupId>${_groupId}</groupId>
+                    <artifactId>${_name}-${it}</artifactId>
+                    <version>${_version}</version>
+                </parent>
+                <artifactId>${_name}-${it}-api</artifactId>
+                <packaging>jar</packaging>
+                <name>${_name}-${it}-api</name>
+            </project>
+        </result-file>
+        <result-file name="pom" type="xml" dir="${_name}-${it}-logic">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <parent>
+                    <groupId>${_groupId}</groupId>
+                    <artifactId>${_name}-${it}</artifactId>
+                    <version>${_version}</version>
+                </parent>
+                <artifactId>${_name}-${it}-logic</artifactId>
+                <packaging>jar</packaging>
+                <name>${_name}-${it}-logic</name>
+                <dependencies>
+                    <dependency>
+                        <groupId>\${project.groupId}</groupId>
+                        <artifactId>param-model</artifactId>
+                        <version>\${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </project>
+        </result-file>
+        <result-file name="pom" type="xml" dir="${_name}-${it}-impl">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <parent>
+                    <groupId>${_groupId}</groupId>
+                    <artifactId>${_name}-${it}</artifactId>
+                    <version>${_version}</version>
+                </parent>
+                <artifactId>${_name}-${it}-impl</artifactId>
+                <packaging>jar</packaging>
+                <dependencies>
+                    <dependency>
+                        <groupId>\${project.groupId}</groupId>
+                        <artifactId>${_name}-${it}-api</artifactId>
+                        <version>\${project.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>\${project.groupId}</groupId>
+                        <artifactId>${_name}-${it}-logic</artifactId>
+                        <version>\${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </project>
+        </result-file>
+        <result-file name="pom" type="xml" dir="${_name}-${it}-faces">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <parent>
+                    <groupId>${_groupId}</groupId>
+                    <artifactId>${_name}-${it}</artifactId>
+                    <version>${_version}</version>
+                </parent>
+                <artifactId>${_name}-${it}-faces</artifactId>
+                <packaging>war</packaging>
+                <name>${_name}-${it}-faces</name>
+                <dependencies>
+                    <dependency>
+                        <groupId>\${project.groupId}</groupId>
+                        <artifactId>${_name}-${it}-impl</artifactId>
+                        <version>\${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </project>
+        </result-file>
+    </result-group>
+    <% } %>
+</result-group>

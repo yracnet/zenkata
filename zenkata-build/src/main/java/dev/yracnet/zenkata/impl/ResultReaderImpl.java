@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata.impl;
 
 import dev.yracnet.zenkata.xml.ResultGroup;
@@ -66,9 +61,9 @@ public class ResultReaderImpl implements ResultReader {
             if (parent instanceof ResultGroup) {
                 resultGroup = (ResultGroup) parent;
             }
-            if (target instanceof ResultFile && resultGroup != null) {
-                //ResultFile resultFile = (ResultFile) target;
-                //resultFile.setParent(resultGroup);
+            if (target instanceof ResultFile) {
+                ResultFile resultFile = (ResultFile) target;
+                resultFile.setParent(resultGroup);
             }
         }
 
@@ -86,14 +81,7 @@ public class ResultReaderImpl implements ResultReader {
             try {
                 String xml = (String) value;
                 LOGGER.log(Level.FINE, "XML From: {0}", xml.replace("\n", "\\n"));
-                //REMOVE CDATA
-                xml = xml.replaceAll("<result-file([^>]*)>(\\s)*<!\\[CDATA\\[(\\s)*", "<result-file$1>");
-                //xml = xml.replaceAll("<result-file>(\\s)*<!\\[CDATA\\[(\\s)*", "<result-file>");
-                xml = xml.replaceAll("(\\s)*\\]\\]>(\\s)*</result-file>", "</result-file>");
-                //ATTACH CDATA
-                xml = xml.replaceAll("<result-file([^>]*)>", "<result-file$1><![CDATA[");
-                //xml = xml.replace("<result-file>", "<result-file><![CDATA[");
-                xml = xml.replace("</result-file>", "]]></result-file>");
+                xml = ZenkataHelp.sanetizeCDATA(xml);
                 LOGGER.log(Level.INFO, "XML Fixer: {0}", xml.replace("\n", "\\n"));
                 StreamSource source = new StreamSource(new StringReader(xml));
                 return (Result) UNMARSHALLER.unmarshal(source);

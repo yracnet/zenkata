@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata;
+
+import dev.yracnet.zenkata.impl.EntryConvertImpl;
 
 /**
  *
  * @author Willyams Yujra
  */
-public interface Factory {
-	public boolean test(Object o);
+public interface EntryConvert {
+	public static final EntryConvert NONE = new EntryConvertImpl();
 
-	public Object apply(Object o);
+	public boolean test(EntryItem o);
+
+	public Object apply(EntryItem o);
 }

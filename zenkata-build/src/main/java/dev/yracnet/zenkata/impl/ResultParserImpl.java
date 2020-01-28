@@ -15,28 +15,28 @@
  */
 package dev.yracnet.zenkata.impl;
 
-import dev.yracnet.zenkata.EntryMask;
-import groovy.text.Template;
-import java.io.File;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import dev.yracnet.zenkata.ResultParser;
+import dev.yracnet.zenkata.xml.ResultFile;
 
 /**
  *
  * @author Willyams Yujra
  */
-@Getter
-@Setter
-@ToString
-public class EntryMaskImpl implements EntryMask {
-    
-    private File file;
-    private Template template;
-    
+public class ResultParserImpl implements ResultParser {
+
     @Override
-    public boolean isExist() {
-        return file != null && template != null;
+    public ResultFile parser(ResultFile item) {
+        String type = item.getType();
+        if ("java".equals(type)) {
+            String content = "package " + item.getPkg() + ";\n\n" + item.getContent();
+            item.setContent(content);
+        }
+        if ("xml".equals(type)) {
+            String content = item.getContent();
+            content = content == null ? "<!-- ERROR -->" : content.trim();
+            item.setContent(content);
+        }
+        return item;
     }
-    
+
 }

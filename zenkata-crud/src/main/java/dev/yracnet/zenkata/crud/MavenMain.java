@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata.crud;
 
 import dev.yracnet.zenkata.ZenkataBuild;
@@ -29,17 +24,20 @@ import java.io.File;
  */
 public class MavenMain {
 	public static void main(String[] args) {
-		ZenkataBuild build = new ZenkataBuild();
+		ZenkataBuild build = ZenkataBuild.getInstance();
 		File dir = build.getCurrentDirectory();
 		build.addItemBlank();
-		build.addMaskDirectory("config");
-		build.setOutputString("../temp", dir);
-		System.out.println("-->" + build.getOutput());
-		build.putContext("group", "dev.yracnet.exmaple");
-		build.putContext("name", "demo");
-		build.putContext("name", "react");
-		build.putContext("managerList", new String[]{"manager"});
-		build.putContext("providerList", new String[]{"provider"});
+		build.addMaskDirectory("maven");
+		build.addMaskDirectory("maven/base");
+		build.addMaskDirectory("maven/manager");
+		build.addMaskDirectory("maven/provider");
+		build.setOutput("../temp", dir);
+		build.putContext("group", "dev.yracnet.example");
+		build.putContext("name", "param");
+		build.putContext("version", "1.0.0-0");
+		build.putContext("managerList", new String[]{"admin"});
+		build.putContext("providerList", new String[]{"service"});
+		build.putContext("withExample", true);
 		build.generate();
 	}
 }

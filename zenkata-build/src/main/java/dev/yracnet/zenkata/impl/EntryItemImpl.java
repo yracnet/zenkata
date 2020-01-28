@@ -13,45 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata.impl;
 
-import groovy.json.JsonSlurper;
 import java.util.List;
-import java.util.HashMap;
 import dev.yracnet.zenkata.EntryItem;
+import java.util.ArrayList;
 
 /**
  *
  * @author Willyams Yujra
  */
 public class EntryItemImpl implements EntryItem {
-    
-    public static final EntryItem BLANK = new EntryItemImpl(new HashMap<>());
-
-    private final JsonSlurper jsonSlurper = new JsonSlurper();
     private Object value;
+    private final List<Object> children = new ArrayList<>();
 
     public EntryItemImpl(Object value) {
         this.value = value;
     }
 
     @Override
-    public Object getObject() {
-        String jsonString = createJson(value);
-        return jsonSlurper.parseText(jsonString);
+    public void setValue(Object value) {
+        this.value = value;
     }
 
     @Override
-    public List<EntryItem> getChildren() {
-        return List.of();
+    public Object getValue() {
+        return value;
     }
 
-    public String createJson(Object value) {
-        return "{}";
+    @Override
+    public void addChildren(Object value) {
+        children.add(value);
+    }
+
+    @Override
+    public List<Object> getChildren() {
+        return children;
     }
 }

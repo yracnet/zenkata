@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata.impl;
 
 import dev.yracnet.zenkata.EntryMask;
@@ -72,7 +67,7 @@ public class EntryReaderImpl implements EntryReader {
         LOGGER.log(Level.INFO, "ADD MASK NAME {0}", name);
         File dir = searchFirstFile(name);
         List<EntryMask> list = new ArrayList<>();
-        if (dir.isDirectory()) {
+        if (dir != null && dir.isDirectory()) {
             File files[] = dir.listFiles(it -> it.isFile());
             for (File file : files) {
                 LOGGER.log(Level.INFO, "ADD MASK {0}", file);

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+def _withExample = "${ctx.withExample == false}"
+def _package  = "${ctx.group}.${ctx.name}"
+def _groupId  = "${ctx.group}.${ctx.name}"
+def _version  = "${ctx.version}"
+def _name  = "${ctx.name}"
+%>
+<result-group dir="${_name}-model">
+    <result-file name="ParGrupoValidate" type="java" dir="src/main/java" pkg="${_package}.validate" skip="${_withExample}">
+<![CDATA[
+import java.util.List;
+
+public class ParGrupoValidate {
+}
+]]>
+    </result-file>
+    <result-file name="persistence" type="xml" dir="src/main/resources/META-INF">
+        <persistence version="2.1" 
+                     xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+            <persistence-unit name="${_name}-persit" transaction-type="JPA">
+                <jta-data-source>java:comp/env/jdbc/${_name}</jta-data-source>
+                <properties>
+                    <property name="hibernate.cache.use_query_cache" value="true"/>
+                    <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+                </properties>
+            </persistence-unit>
+        </persistence>
+    </result-file>
+    <result-file name="${_name}-model" type="jpa" dir="src/main/java" pkg="${_package}.model">
+        <entity-mappings ptype="MONOLITH" ppkg="${_package}" epkg="model" v="5.2" 
+                         rws="_15759013371931" Pws="_15759013371931" cws="_15759013371931" 
+                         persistenceUnitName="${_name}-persit" 
+                         sm="false" xs="false" 
+                         id="_1570724113529619" 
+                         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" 
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <entity compositePrimaryKeyClass="ParDominioPK" abs="false" class="ParDominio" v="true" jbn="false" xre="false" m="false" rootElement="_1570724113529619" id="_1579040848076377">
+                <inf e="true" n="java.io.Serializable"/>
+                <ath>wyujra</ath>
+                <attributes>
+                    <basic attribute-type="String" v="true" xvt="" name="codigo" id="_157909294579789">
+                        <xwm/>
+                        <xm/>
+                        <column name="CODIGO" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="tipo" id="_157909302023693">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="descripcion" id="_1579040868034381">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="estado" id="_1579093245268107">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="configuracion" id="_157909234238154">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoPor" ft="false" jbt="false" id="_1579040909449383">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_ACTUALIZADO_POR" unique="false" nullable="false" insertable="true" updatable="true" length="50"/>
+                    </basic>
+                    <basic attribute-type="java.util.Date" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoEl" ft="false" jbt="false" id="_1579040911743384">
+                        <xwm/>
+                        <xm/>
+                        <temporal>TIMESTAMP</temporal>
+                        <column name="CTRL_ACTUALIZADO_EL" unique="false" nullable="false" insertable="true" updatable="true"/>
+                    </basic>
+                    <many-to-one optional="true" primaryKey="false" connected-entity-id="_157909222071639" connected-attribute-id="_157909230187053" v="true" xvt="" name="parGrupo" id="_157909230186852">
+                        <xwm/>
+                        <xm/>
+                        <join-column name="ID_GRUPO" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </many-to-one>
+                    <one-to-many orp="false" collection-type="java.util.List" cit="java.util.ArrayList" connected-entity-id="_1579040918695385" connected-attribute-id="_1579040949683392" v="true" xvt="" name="parValorList" id="_1579040949683393">
+                        <xwm/>
+                        <xm/>
+                    </one-to-many>
+                    <one-to-many orp="false" collection-type="java.util.List" cit="java.util.ArrayList" connected-entity-id="_157909307094597" connected-attribute-id="_1579093099548101" v="true" xvt="" name="parConsultaList" id="_1579093099549102">
+                        <xwm/>
+                        <xm/>
+                    </one-to-many>
+                    <id attribute-type="Long" v="true" xvt="" name="id" id="_157909294042488">
+                        <xwm/>
+                        <xm/>
+                        <generated-value strategy="DEFAULT"/>
+                    </id>
+                    <version attribute-type="Long" v="true" xvt="" name="ctrlVersion" id="_1579040906150382">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_VERSION" unique="false" nullable="true" insertable="true" updatable="true" precision="0"/>
+                    </version>
+                </attributes>
+                <table name="PAR_DOMINIO"/>
+            </entity>
+            <entity compositePrimaryKeyClass="ParValorPK" abs="false" class="ParValor" v="true" jbn="false" xre="false" m="false" rootElement="_1570724113529619" id="_1579040918695385">
+                <inf e="true" n="java.io.Serializable"/>
+                <ath>wyujra</ath>
+                <attributes>
+                    <basic attribute-type="String" v="true" xvt="" name="valor" id="_1579040959322394">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="valorPadre" id="_1579040960065396">
+                        <xwm/>
+                        <xm/>
+                        <column name="VALOR_PADRE" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="descripcion" id="_1579040959842395">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="configuracion" id="_1579040996449397">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="estado" id="_1579093271148108">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoPor" ft="false" jbt="false" id="_157909303625694">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_ACTUALIZADO_POR" unique="false" nullable="false" insertable="true" updatable="true" length="50"/>
+                    </basic>
+                    <basic attribute-type="java.util.Date" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoEl" ft="false" jbt="false" id="_157909303839595">
+                        <xwm/>
+                        <xm/>
+                        <temporal>TIMESTAMP</temporal>
+                        <column name="CTRL_ACTUALIZADO_EL" unique="false" nullable="false" insertable="true" updatable="true"/>
+                    </basic>
+                    <many-to-one optional="true" primaryKey="false" connected-entity-id="_1579040848076377" connected-attribute-id="_1579040949683393" v="true" xvt="" name="parDominio" id="_1579040949683392">
+                        <xwm/>
+                        <xm/>
+                        <join-column name="ID_PARAM" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </many-to-one>
+                    <id attribute-type="Long" v="true" xvt="" name="id" id="_1579040918696386">
+                        <xwm/>
+                        <xm/>
+                        <generated-value strategy="DEFAULT"/>
+                    </id>
+                    <version attribute-type="Long" v="true" xvt="" name="ctrlVersion" id="_157909304067096">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_VERSION" unique="false" nullable="true" insertable="true" updatable="true" precision="0"/>
+                    </version>
+                </attributes>
+                <table name="PAR_VALOR"/>
+            </entity>
+            <entity compositePrimaryKeyClass="ParGrupoPK" abs="false" class="ParGrupo" v="true" jbn="false" xre="false" m="false" rootElement="_1570724113529619" id="_157909222071639">
+                <inf e="true" n="java.io.Serializable"/>
+                <ath>wyujra</ath>
+                <attributes>
+                    <basic attribute-type="String" v="true" xvt="" name="codigo" id="_157909226193245">
+                        <xwm/>
+                        <xm/>
+                        <column name="CODIGO" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="nombre" id="_157909292282187">
+                        <xwm/>
+                        <xm/>
+                        <column name="NOMBRE" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="descripcion" id="_157909226252446">
+                        <xwm/>
+                        <xm/>
+                        <column name="DESCRIPCION" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoPor" ft="false" jbt="false" id="_157909296575690">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_ACTUALIZADO_POR" unique="false" nullable="false" insertable="true" updatable="true" length="50"/>
+                    </basic>
+                    <basic attribute-type="java.util.Date" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoEl" ft="false" jbt="false" id="_157909296807991">
+                        <xwm/>
+                        <xm/>
+                        <temporal>TIMESTAMP</temporal>
+                        <column name="CTRL_ACTUALIZADO_EL" unique="false" nullable="false" insertable="true" updatable="true"/>
+                    </basic>
+                    <many-to-one optional="true" primaryKey="false" connected-entity-id="_157909222071639" connected-attribute-id="_157909223757844" v="true" xvt="" name="parParent" id="_157909223757643">
+                        <xwm/>
+                        <xm/>
+                        <join-column name="ID_PARAM" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </many-to-one>
+                    <one-to-many orp="false" collection-type="java.util.List" cit="java.util.ArrayList" connected-entity-id="_157909222071639" connected-attribute-id="_157909223757643" v="true" xvt="" name="parGrupoList" id="_157909223757844">
+                        <xwm/>
+                        <xm/>
+                    </one-to-many>
+                    <one-to-many orp="false" collection-type="java.util.List" cit="java.util.ArrayList" connected-entity-id="_1579040848076377" connected-attribute-id="_157909230186852" v="true" xvt="" name="parDominioList" id="_157909230187053">
+                        <xwm/>
+                        <xm/>
+                    </one-to-many>
+                    <id attribute-type="Long" v="true" xvt="" name="id" id="_157909222072940">
+                        <xwm/>
+                        <xm/>
+                        <generated-value strategy="DEFAULT"/>
+                    </id>
+                    <version attribute-type="Long" v="true" xvt="" name="ctrlVersion" id="_157909297087192">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_VERSION" unique="false" nullable="true" insertable="true" updatable="true" precision="0"/>
+                    </version>
+                </attributes>
+                <table name="PAR_GRUPO"/>
+            </entity>
+            <entity compositePrimaryKeyClass="ParConsultaPK" abs="false" class="ParConsulta" v="true" jbn="false" xre="false" m="false" rootElement="_1570724113529619" id="_157909307094597">
+                <inf e="true" n="java.io.Serializable"/>
+                <ath>wyujra</ath>
+                <attributes>
+                    <basic attribute-type="String" v="true" xvt="" name="tipo" id="_1579093146492105">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="origen" id="_1579093213636106">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="columnas" id="_1579093118836103">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="consulta" id="_1579093119179104">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" name="estado" id="_1579093284813109">
+                        <xwm/>
+                        <xm/>
+                    </basic>
+                    <basic attribute-type="String" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoPor" ft="false" jbt="false" id="_1579093836756276">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_ACTUALIZADO_POR" unique="false" nullable="false" insertable="true" updatable="true" length="50"/>
+                    </basic>
+                    <basic attribute-type="java.util.Date" v="true" xvt="" am="PRIVATE" name="ctrlActualizadoEl" ft="false" jbt="false" id="_1579093838955277">
+                        <xwm/>
+                        <xm/>
+                        <temporal>TIMESTAMP</temporal>
+                        <column name="CTRL_ACTUALIZADO_EL" unique="false" nullable="false" insertable="true" updatable="true"/>
+                    </basic>
+                    <many-to-one optional="true" primaryKey="false" connected-entity-id="_1579040848076377" connected-attribute-id="_1579093099549102" v="true" xvt="" name="parDominio" id="_1579093099548101">
+                        <xwm/>
+                        <xm/>
+                        <join-column name="ID_DOMINIO" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    </many-to-one>
+                    <id attribute-type="Long" v="true" xvt="" name="id" id="_157909307094698">
+                        <xwm/>
+                        <xm/>
+                        <generated-value strategy="DEFAULT"/>
+                    </id>
+                    <version attribute-type="Long" v="true" xvt="" name="ctrlVersion" id="_1579093834442275">
+                        <xwm/>
+                        <xm/>
+                        <column name="CTRL_VERSION" unique="false" nullable="true" insertable="true" updatable="true" precision="0"/>
+                    </version>
+                </attributes>
+                <table name="PAR_CONSULTA"/>
+            </entity>
+            <c>
+                <ct>java.util.List</ct>
+                <ct>java.util.Set</ct>
+                <ct>java.util.Map</ct>
+                <ct>java.util.Collection</ct>
+                <cit>java.util.ArrayList</cit>
+                <cit>java.util.LinkedList</cit>
+                <cit>java.util.HashSet</cit>
+                <cit>java.util.TreeSet</cit>
+                <cit>java.util.HashMap</cit>
+            </c>
+            <wsl>
+                <ws n="Main" id="_15759013371931">
+                    <i ref="_1579040848076377" x="324" y="189"/>
+                    <i ref="_157909307094597" x="621" y="445"/>
+                    <i ref="_1579040918695385" x="621" y="77"/>
+                    <i ref="_157909222071639" x="80" y="77"/>
+                </ws>
+            </wsl>
+        </entity-mappings>
+    </result-file>
+</result-group>

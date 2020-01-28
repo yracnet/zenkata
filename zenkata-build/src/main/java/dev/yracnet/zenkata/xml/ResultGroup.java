@@ -32,7 +32,7 @@ import lombok.ToString;
  *
  * @author Willyams Yujra
  */
-@XmlRootElement(name = "group", namespace = Result.NAMESPACE)
+@XmlRootElement(name = "result-group")
 @XmlAccessorType(XmlAccessType.NONE)
 @Getter
 @Setter
@@ -49,16 +49,14 @@ public class ResultGroup implements Result {
     private String layer;
     @XmlAttribute(name = "dir")
     private String dir;
-    @XmlAttribute(name = "pkg")
-    private String pkg;
 
     @XmlElements({
-        @XmlElement(name = "group", type = ResultGroup.class, namespace = Result.NAMESPACE),
-        //@XmlElement(name = "result-java", type = ResultFileJava.class, namespace = Result.NAMESPACE),
-        //@XmlElement(name = "result-html", type = ResultFileHtml.class, namespace = Result.NAMESPACE),
-        //@XmlElement(name = "result-xml", type = ResultFileXml.class, namespace = Result.NAMESPACE),
-        //@XmlElement(name = "result-js", type = ResultFileJs.class, namespace = Result.NAMESPACE),
-        @XmlElement(name = "file", type = ResultFile.class, namespace = Result.NAMESPACE)
+        @XmlElement(name = "result-group", type = ResultGroup.class),
+        //@XmlElement(name = "result-java", type = ResultFileJava.class),
+        //@XmlElement(name = "result-html", type = ResultFileHtml.class),
+        //@XmlElement(name = "result-xml", type = ResultFileXml.class),
+        //@XmlElement(name = "result-js", type = ResultFileJs.class),
+        @XmlElement(name = "result-file", type = ResultFile.class)
     })
     private final List<Result> resutlList = new ArrayList<>();
 

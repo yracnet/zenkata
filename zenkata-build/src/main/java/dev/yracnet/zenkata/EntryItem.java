@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata;
 
+import dev.yracnet.zenkata.impl.EntryItemImpl;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,8 +24,14 @@ import java.util.List;
  * @author Willyams Yujra
  */
 public interface EntryItem extends Entry {
-    
-    Object getObject();
 
-    List<EntryItem> getChildren();
+    public static final EntryItem BLANK = new EntryItemImpl(new HashMap<>());
+
+    void setValue(Object value);
+
+    Object getValue();
+
+    void addChildren(Object value);
+
+    List<Object> getChildren();
 }

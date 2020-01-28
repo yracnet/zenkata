@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.yracnet.zenkata.xml;
 
 import dev.yracnet.zenkata.Result;
@@ -25,6 +20,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,13 +30,15 @@ import lombok.ToString;
  *
  * @author Willyams Yujra
  */
-@XmlRootElement(name = "file", namespace = Result.NAMESPACE)
+@XmlRootElement(name = "result-file")
 @XmlAccessorType(XmlAccessType.NONE)
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"parent", "content", "comment"})
 public class ResultFile implements Result {
 
+    @XmlTransient
+    private ResultGroup parent;
     @XmlAttribute(name = "skip")
     private boolean skip;
     @XmlAttribute(name = "parser")
@@ -64,31 +62,43 @@ public class ResultFile implements Result {
     @XmlValue
     private String content;
 
-    public String getFile() {
-        StringBuilder file = new StringBuilder("/");
+    public String getResultPath() {
+        StringBuilder path = new StringBuilder("/");
+        if (parent != null && parent.getDir() != null) {
+            path.append(parent.getDir()).append("/");
+        }
         if (dir != null) {
-            file.append(dir);
+            path.append(dir);
         }
         if (layer != null) {
-            file.append("/[").append(layer).append("]/");
+            path.append("/").append(layer).append("/");
         }
         if (pkg != null) {
-            file.append("/[").append(pkg.replace(".", "/")).append("]/");
+            path.append("/").append(pkg.replace(".", "/")).append("/");
         }
-        file.append("/").append(name).append(".").append(type);
-        return file.toString().replace("//", "/");
+        path.append("/").append(name).append(".").append(type);
+        return path.toString().replace("//", "/").replace("//", "/");
     }
 
-    public void setParent(ResultGroup group) {
-        parser = inherentValue(parser, group.getParser(), "");
-        module = inherentValue(module, group.getModule(), "");
-        layer = inherentValue(layer, group.getLayer(), "");
-        dir = inherentValue(dir, group.getDir(), ".");
-        pkg = inherentValue(pkg, group.getPkg(), "");
+    public void setParent(ResultGroup parent) {
+        this.parent = parent;
+        if (parent != null) {
+            parser = inherentValue(parser, parent.getParser(), "");
+            module = inherentValue(module, parent.getModule(), "");
+            layer = inherentValue(layer, parent.getLayer(), "");
+        }
     }
 
     private String inherentValue(String value, String parentValue, String defaultValue) {
         return value != null && !value.isBlank() ? value : parentValue != null && !parentValue.isBlank() ? parentValue : defaultValue;
+    }
+
+    public byte[] getContentBytes() {
+        return content == null ? null : content.getBytes();
+    }
+
+    public byte[] getCommentBytes() {
+        return comment == null ? null : comment.getBytes();
     }
 
 }

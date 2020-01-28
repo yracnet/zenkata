@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+def _groupId  = "${ctx.group}.${ctx.name}"
+def _version  = "${ctx.version}"
+def _name  = "${ctx.name}"
+%>
+<result-group>
+    <result-file name="pom" type="xml" dir="">
+        <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+            <modelVersion>4.0.0</modelVersion>
+            <groupId>${_groupId}</groupId>
+            <artifactId>${_name}</artifactId>
+            <version>${_version}</version>
+            <packaging>pom</packaging>
+            <inceptionYear>2020</inceptionYear>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <maven.compiler.source>11</maven.compiler.source>
+                <maven.compiler.target>11</maven.compiler.target>
+            </properties>
+            <modules>
+                <module>${_name}-model</module>
+                <% ctx.managerList.each { %>
+                <module>${_name}-${it}</module>
+                <% } %>
+                <% ctx.providerList.each { %>
+                <module>${_name}-${it}</module>
+                <% } %>
+            </modules>
+        </project>
+    </result-file>
+    <result-file name="pom" type="xml" dir="${_name}-model">
+        <project xmlns="http://maven.apache.org/POM/4.0.0" 
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+            <modelVersion>4.0.0</modelVersion>
+            <parent>
+                <groupId>${_groupId}</groupId>
+                <artifactId>${_name}</artifactId>
+                <version>${_version}</version>
+            </parent>
+            <artifactId>${_name}-model</artifactId>
+            <packaging>jar</packaging>
+            <name>${_name}-model</name>
+        </project>
+    </result-file>
+</result-group>

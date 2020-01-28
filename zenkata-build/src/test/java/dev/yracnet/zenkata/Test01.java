@@ -20,8 +20,8 @@ public class Test01 {
         values.put("a", 1);
         EntryItem item = new EntryItemImpl(values);
 
-        ZenkataBuild build = new ZenkataBuild();
-        build.setOutputString("output");
+        ZenkataBuild build = ZenkataBuild.getInstance();
+        build.setOutput("output");
         build.addMaskString("test/01.xml");
         build.addMaskString("test/02.xml");
         //build.putLayer("view", "${it.group}");

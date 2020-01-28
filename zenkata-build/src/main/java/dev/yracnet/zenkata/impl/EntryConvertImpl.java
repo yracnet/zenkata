@@ -13,21 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package dev.yracnet.zenkata;
+package dev.yracnet.zenkata.impl;
+
+import groovy.json.JsonSlurper;
+import dev.yracnet.zenkata.EntryConvert;
+import dev.yracnet.zenkata.EntryItem;
 
 /**
  *
  * @author Willyams Yujra
- * @param <T>
  */
-public interface Parser<T extends Result> {
+public class EntryConvertImpl implements EntryConvert{
 
-    public static final Parser NONE = (it) -> it;
+    private final JsonSlurper jsonSlurper = new JsonSlurper();
 
-    public T parser(T item);
+    @Override
+    public boolean test(EntryItem o) {
+        return true;
+    }
+
+    @Override
+    public Object apply(EntryItem o) {
+        String jsonString = createJson(o);
+        return jsonSlurper.parseText(jsonString);
+    }
+
+    private String createJson(Object o) {
+        return "{}";
+    }
+    
+    
 }
