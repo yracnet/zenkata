@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<result-group>
-    <result-file name="02-A" type="xml">
+<result:group xmlns:result="https://yracnet.github.com/zenkata/result">
+    <result:file name="02-A" type="xml">
         <text>Archivo 02-A</text>
-    </result-file>
-    <result-file name="02-B" type="xml">
+    </result:file>
+    <result:file name="02-B" type="xml">
         <text>Archivo 02-B</text>
-    </result-file>
-</result-group>
+    </result:file>
+</result:group>
