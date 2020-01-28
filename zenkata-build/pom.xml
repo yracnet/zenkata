@@ -95,7 +95,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/../xsd</outputDirectory>
+                            <outputDirectory>${basedir}/../schema</outputDirectory>
                             <resources>          
                                 <resource>
                                     <directory>${basedir}/src/main/schemas/</directory>

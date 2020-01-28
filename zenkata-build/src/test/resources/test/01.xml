@@ -2,8 +2,8 @@
 <result:group 
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:result="https://yracnet.github.com/zenkata/result"
-    xsi:schemaLocation='https://memorynotfound.com/course http://zenkata.github.com/schemas/result.xsd'>
-    <result:file name="01-A" type="xml">
+    xsi:schemaLocation='https://yracnet.github.com/zenkata/result https://yracnet.github.io/zenkata/schema/1.0.0/result.xsd'>
+    <result:file name="01-A" type="xml"> 
         <text>Archivo 01-A</text>
     </result:file>
     <result:file name="01-B" type="xml">
