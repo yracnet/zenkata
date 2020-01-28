@@ -70,15 +70,38 @@
                             <sources>
                                 <source>${project.build.directory}/generated-sources/delombok/dev/yracnet/zenkata/xml</source>
                             </sources>
-                            <outputDirectory>${basedir}/src/main/resources/schemas</outputDirectory>
+                            <outputDirectory>${basedir}/src/main/schemas/${project.version}</outputDirectory>
+                            <generateEpisode>false</generateEpisode>
                             <transformSchemas>
                                 <transformSchema>
                                     <uri>https://yracnet.github.com/zenkata/result</uri>
                                     <toPrefix>result</toPrefix>
-                                    <toFile>result-${project.version}.xsd</toFile>
+                                    <toFile>result.xsd</toFile>
                                 </transformSchema>
                             </transformSchemas>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/../xsd</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/src/main/schemas/</directory>
+                                </resource>
+                            </resources>              
+                        </configuration>            
                     </execution>
                 </executions>
             </plugin>
