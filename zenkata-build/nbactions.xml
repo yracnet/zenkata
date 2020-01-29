@@ -11,32 +11,7 @@
         <actionName>CUSTOM-deploy</actionName>
         <displayName>deploy</displayName>
         <goals>
-            <goal>deploy:deploy</goal>
-        </goals>
-    </action>
-    <action>
-        <actionName>CUSTOM-bundle-create</actionName>
-        <displayName>bundle-create</displayName>
-        <goals>
-            <goal>clean:clean</goal>
-            <goal>package</goal>
-            <goal>gpg:sign</goal>
-            <goal>repository:bundle-create</goal>
-        </goals>
-    </action>
-    <action>
-        <actionName>CUSTOM-deploy-staged</actionName>
-        <displayName>deploy-staged</displayName>
-        <goals>
-            <goal>install</goal>
-            <goal>nexus-staging:deploy-staged</goal>
-        </goals>
-    </action>
-    <action>
-        <actionName>CUSTOM-g</actionName>
-        <displayName>g</displayName>
-        <goals>
-            <goal>nexus-staging:deploy</goal>
+            <goal>deploy</goal>
         </goals>
     </action>
 </actions>
