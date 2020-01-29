@@ -6,6 +6,7 @@
     <version>0.2.1</version>
     <name>zenkata</name>
     <packaging>pom</packaging>
+    <description>Zenkata is a TOOL for generate file from a Groovy Template, this tool allow create CRUD GENERATOR</description>
     <modules>
         <module>zenkata-build</module>
         <module>zenkata-crud</module>
@@ -19,6 +20,24 @@
         <maven.source.skip>true</maven.source.skip>
     </properties>
     <inceptionYear>2020</inceptionYear>
+    <url>https://github.com/yracnet/zenkata</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Willyams Yujra</name>
+            <email>yracnet@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/yracnet/zenkata.git</connection>
+        <developerConnection>scm:git:ssh://github.com:yracnet/zenkata.git</developerConnection>
+        <url>http://github.com/yracnet/zenkata/tree/master</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
@@ -36,6 +55,41 @@
                     <skipAnalyzer>true</skipAnalyzer>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>
