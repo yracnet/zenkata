@@ -23,7 +23,7 @@ import java.util.List;
  */
 public interface EntryReader {
 
-    void addDirectory(String name);
+    void addSearchDirectory(String name);
     
     EntryMask readMask(String name);
 

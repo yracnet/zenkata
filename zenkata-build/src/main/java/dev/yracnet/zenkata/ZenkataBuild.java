@@ -24,7 +24,7 @@ import java.util.logging.LogManager;
 
 /**
  *
- * @author wyujra
+ @author Willyams Yujra
  */
 public abstract class ZenkataBuild {
 	static {
@@ -41,41 +41,151 @@ public abstract class ZenkataBuild {
 		return INSTANCE;
 	}
 
+	/**
+	 * Return Current directory
+	 * 
+	 * @return
+	 */
 	public abstract File getCurrentDirectory();
 
+	/**
+	 * Return the output directory
+	 * 
+	 * @return
+	 */
 	public abstract File getOutput();
 
+	/**
+	 * Set Output directory file
+	 * 
+	 * @param output
+	 */
 	public abstract void setOutput(File output);
 
+	/**
+	 * Set Output directory as String
+	 * 
+	 * @param output
+	 */
 	public abstract void setOutput(String output);
 
+	/**
+	 * Set Output directory as string and parent directory
+	 * 
+	 * @param output
+	 *         sub directory
+	 * @param current
+	 *         parent directory
+	 */
 	public abstract void setOutput(String output, File current);
 
-	public abstract void addDirectory(String value);
+	/**
+	 * Add directory for search mask
+	 * 
+	 * @param value
+	 */
+	public abstract void addSearchDirectory(String value);
 
+	/**
+	 * Add EntryMask Element
+	 * 
+	 * @param value
+	 */
 	public abstract void addMask(EntryMask value);
 
+	/**
+	 * Add EntryMask String
+	 * 
+	 * @param name
+	 */
 	public abstract void addMaskString(String name);
 
+	/**
+	 * Add EntryMask Element in directory
+	 * 
+	 * @param name
+	 */
 	public abstract void addMaskDirectory(String name);
 
+	/**
+	 * Add EntryElement for process
+	 * 
+	 * @param value
+	 */
 	public abstract void addItem(EntryItem value);
 
+	/**
+	 * Add Blank EntryElement for process
+	 */
 	public abstract void addItemBlank();
 
-	public abstract void addFactory(EntryConvert value);
+	/**
+	 * Add EntryConvert for Phase execution
+	 * 
+	 * @param value
+	 */
+	public abstract void addConvert(EntryConvert value);
 
+	/**
+	 * Add a ResultParset for phase execution
+	 * 
+	 * @param name
+	 * @param value
+	 */
 	public abstract void putParser(String name, ResultParser value);
 
+	/**
+	 * Return ResultParser by name
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public abstract ResultParser getParser(String name);
 
-	public abstract void putLayer(String name, String value);
-
+	/**
+	 * Add Object in Context execution
+	 * 
+	 * @param name
+	 * @param value
+	 */
 	public abstract void putContext(String name, Object value);
 
+	/**
+	 * Execute all Phase for generate
+	 * 
+	 * FoeEach (EntryItem item, EntryMask mask) Then
+	 * 
+	 * mask = EntryRead(mask)
+	 * 
+	 * item = EntryConvert (item)
+	 * 
+	 * result = Apply (item, mask, context)
+	 * 
+	 * result = ResultRead(result)
+	 * 
+	 * result = ResultParser(result)
+	 * 
+	 * ResultWrite(result)
+	 * 
+	 * @return Result Object for the Process Finish
+	 */
 	public abstract Result generate();
 
+	/**
+	 * Execution Process on Demand
+	 * 
+	 * @param item
+	 * @param parent
+	 * @param mask
+	 * @param result
+	 */
 	public abstract void processMask(EntryItem item, EntryItem parent, EntryMask mask, ResultGroup result);
 
+	/**
+	 * Apply Convert
+	 * 
+	 * @param item
+	 * @return
+	 */
 	public abstract Object applyConvert(EntryItem item);
 }

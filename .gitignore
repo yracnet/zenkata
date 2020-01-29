@@ -25,3 +25,4 @@ hs_err_pid*
 episode_*.xjb
 /zenkata-crud/target/
 /temp/
+/zenkata-build/target/

@@ -48,7 +48,7 @@ public class EntryReaderImpl implements EntryReader {
     private final List<File> directory = new ArrayList<>();
 
     @Override
-    public void addDirectory(String path) {
+    public void addSearchDirectory(String path) {
         directory.add(new File(path));
     }
 

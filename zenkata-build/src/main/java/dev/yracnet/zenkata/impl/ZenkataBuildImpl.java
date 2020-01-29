@@ -55,9 +55,8 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     private EntryReader entryReader = new EntryReaderImpl();
     private final List<EntryMask> maskList = new ArrayList();
     private final List<EntryItem> itemList = new ArrayList();
-    private final List<EntryConvert> factoryList = new ArrayList();
+    private final List<EntryConvert> convertList = new ArrayList();
     private final Map<String, ResultParser> parser = new HashMap();
-    private final Map<String, String> layer = new HashMap();
     private final Map<String, Object> context = new HashMap();
 
     @Override
@@ -89,9 +88,9 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     }
 
     @Override
-    public void addDirectory(String value) {
+    public void addSearchDirectory(String value) {
         if (value != null) {
-            entryReader.addDirectory(value);
+            entryReader.addSearchDirectory(value);
         }
     }
 
@@ -132,9 +131,9 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     }
 
     @Override
-    public void addFactory(EntryConvert value) {
+    public void addConvert(EntryConvert value) {
         if (value != null) {
-            factoryList.add(value);
+            convertList.add(value);
         }
     }
 
@@ -146,11 +145,6 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     @Override
     public ResultParser getParser(String name) {
         return parser.getOrDefault(name, ResultParser.DEFAULT);
-    }
-
-    @Override
-    public void putLayer(String name, String value) {
-        layer.put(name, value);
     }
 
     @Override
@@ -188,7 +182,7 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
 
     @Override
     public Object applyConvert(EntryItem item) {
-        for (var factory : factoryList) {
+        for (var factory : convertList) {
             if (factory.test(item)) {
                 return factory.apply(item);
             }

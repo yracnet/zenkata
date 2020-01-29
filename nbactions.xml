@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action>
+        <actionName>CUSTOM-set-version</actionName>
+        <displayName>set-version</displayName>
+        <goals>
+            <goal>versions:set</goal>
+        </goals>
+    </action>
+    <action>
+        <actionName>CUSTOM-deploy</actionName>
+        <displayName>deploy</displayName>
+        <goals>
+            <goal>jar:jar</goal>
+            <goal>javadoc:jar</goal>
+            <goal>deploy:deploy</goal>
+        </goals>
+    </action>
+</actions>
