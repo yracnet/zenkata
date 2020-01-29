@@ -41,7 +41,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.github.yracnet.zenkata</groupId>
+                <groupId>com.github.yracnet.maven</groupId>
                 <artifactId>qualitycode-maven-plugin</artifactId>
                 <version>0.1.1</version>
                 <executions>
