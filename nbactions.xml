@@ -11,9 +11,18 @@
         <actionName>CUSTOM-deploy</actionName>
         <displayName>deploy</displayName>
         <goals>
-            <goal>jar:jar</goal>
-            <goal>javadoc:jar</goal>
+            <goal>clean:clean</goal>
+            <goal>package</goal>
             <goal>deploy:deploy</goal>
+        </goals>
+    </action>
+    <action>
+        <actionName>CUSTOM-repository:bundle-create</actionName>
+        <displayName>repository:bundle-create</displayName>
+        <goals>
+            <goal>clean:clean</goal>
+            <goal>package</goal>
+            <goal>repository:bundle-create</goal>
         </goals>
     </action>
 </actions>
