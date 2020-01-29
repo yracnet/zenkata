@@ -28,7 +28,15 @@
         <actionName>CUSTOM-deploy-staged</actionName>
         <displayName>deploy-staged</displayName>
         <goals>
+            <goal>install</goal>
             <goal>nexus-staging:deploy-staged</goal>
+        </goals>
+    </action>
+    <action>
+        <actionName>CUSTOM-g</actionName>
+        <displayName>g</displayName>
+        <goals>
+            <goal>nexus-staging:deploy</goal>
         </goals>
     </action>
 </actions>
