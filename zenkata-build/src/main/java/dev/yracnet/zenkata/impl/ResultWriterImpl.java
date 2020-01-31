@@ -18,6 +18,7 @@ package dev.yracnet.zenkata.impl;
 import dev.yracnet.zenkata.xml.ResultFile;
 import dev.yracnet.zenkata.xml.ResultGroup;
 import dev.yracnet.zenkata.Result;
+import dev.yracnet.zenkata.ResultException;
 import dev.yracnet.zenkata.ResultWriter;
 import dev.yracnet.zenkata.ZenkataBuild;
 import java.io.File;
@@ -51,7 +52,7 @@ public class ResultWriterImpl implements ResultWriter {
         } else if (result instanceof ResultFile) {
             try {
                 writeFile((ResultFile) result, dir);
-            } catch (IOException e) {
+            } catch (ResultException e) {
                 e.printStackTrace();
                 LOGGER.log(Level.SEVERE, "Error Write Result", e);
             }
@@ -61,7 +62,7 @@ public class ResultWriterImpl implements ResultWriter {
         }
     }
 
-    private void writeFile(ResultFile result, File dir) throws IOException {
+    private void writeFile(ResultFile result, File dir) throws ResultException {
         LOGGER.log(Level.FINE, "Write Directory: {0}", dir);
         LOGGER.log(Level.FINE, "Write Result: {0}", result);
         LOGGER.log(Level.INFO, "Write Result: {0}", result.getResultPath());
@@ -80,12 +81,20 @@ public class ResultWriterImpl implements ResultWriter {
         byte[] comment = result.getCommentBytes();
         if (comment != null) {
             StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
-            Files.write(path, comment, option);
+            try {
+                Files.write(path, comment, option);
+            } catch (IOException e) {
+                throw new ResultException("Error in write comment data in file: " + out, e);
+            }
         }
         byte[] content = result.getContentBytes();
         if (content != null) {
             StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
-            Files.write(path, content, option);
+            try {
+                Files.write(path, content, option);
+            } catch (IOException e) {
+                throw new ResultException("Error in write content data in file: " + out, e);
+            }
         }
     }
 }

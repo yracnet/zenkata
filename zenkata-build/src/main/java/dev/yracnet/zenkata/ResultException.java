@@ -19,6 +19,12 @@ package dev.yracnet.zenkata;
  *
  * @author Willyams Yujra
  */
-public interface ResultReader {
-	Result read(Object value) throws ResultException;
+public class ResultException extends Exception {
+	public ResultException(String message) {
+		super(message);
+	}
+
+	public ResultException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

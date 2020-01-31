@@ -22,5 +22,5 @@ import java.io.File;
  * @author Willyams Yujra
  */
 public interface ResultWriter {
-	public void write(Result result, File dir);
+	public void write(Result result, File dir) throws ResultException;
 }

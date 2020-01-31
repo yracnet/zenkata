@@ -23,6 +23,8 @@ import dev.yracnet.zenkata.ResultReader;
 import dev.yracnet.zenkata.ResultWriter;
 import dev.yracnet.zenkata.ZenkataBuild;
 import dev.yracnet.zenkata.xml.ResultGroup;
+import dev.yracnet.formatter.FormatterBuild;
+import dev.yracnet.formatter.FormatterException;
 import groovy.lang.Writable;
 import groovy.text.Template;
 import java.io.File;
@@ -38,6 +40,7 @@ import lombok.Setter;
 import lombok.ToString;
 import dev.yracnet.zenkata.ResultParser;
 import dev.yracnet.zenkata.EntryConvert;
+import dev.yracnet.zenkata.ResultException;
 
 /**
  *
@@ -156,7 +159,20 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     public Result generate() {
         ResultGroup result = new ResultGroup();
         itemList.forEach(item -> maskList.forEach(mask -> processMask(item, null, mask, result)));
-        resultWriter.write(result, output);
+        try {
+            resultWriter.write(result, output);
+        } catch (ResultException e) {
+            LOGGER.log(Level.SEVERE, "Error write Result", e);
+        }
+        try {
+            FormatterBuild build = FormatterBuild.create();
+            build.setBasedir(output);
+            build.setDirectories(output);
+            //build.setIncludes("**/*.java");
+            build.execute();
+        } catch (FormatterException e) {
+            LOGGER.log(Level.SEVERE, "Error format Code", e);
+        }
         return result;
     }
 
@@ -173,11 +189,15 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
         binding.put("ctx", context);
         binding.put("build", this);
         LOGGER.log(Level.FINE, "processMask: Context: {0}", binding);
-        Template template = mask.getTemplate();
-        Writable out = template.make(binding);
-        Result temp = resultReader.read(out);
-        LOGGER.log(Level.FINE, "processMask: Result: {0}", temp);
-        result.addResult(temp);
+        try {
+            Template template = mask.getTemplate();
+            Writable out = template.make(binding);
+            Result temp = resultReader.read(out);
+            LOGGER.log(Level.FINE, "processMask: Result: {0}", temp);
+            result.addResult(temp);
+        } catch (ResultException e) {
+            LOGGER.log(Level.SEVERE, "processMask: Exception Result: {0} : {1}", new Object[]{mask.getFile(), e});
+        }
     }
 
     @Override

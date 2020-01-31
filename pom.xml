@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.yracnet.zenkata</groupId>
     <artifactId>zenkata</artifactId>
-    <version>0.2.1</version>
+    <version>1.0.0</version>
     <name>zenkata</name>
     <packaging>pom</packaging>
     <description>Zenkata is a TOOL for generate file from a Groovy Template, this tool allow create CRUD GENERATOR</description>
