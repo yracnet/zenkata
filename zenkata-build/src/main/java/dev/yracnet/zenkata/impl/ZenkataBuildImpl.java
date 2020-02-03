@@ -180,14 +180,12 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
     public void processMask(EntryItem item, EntryItem itemParent, EntryMask mask, ResultGroup result) {
         LOGGER.log(Level.FINE, "processMask: {0} - {1} - {2}", new Object[]{item, itemParent, mask});
         Map binding = new HashMap();
-        Map entry = new HashMap();
         Object value = applyConvert(item);
         Object parent = applyConvert(itemParent);
-        entry.put("parent", parent);
-        entry.put("value", value);
-        binding.put("entry", entry);
-        binding.put("ctx", context);
-        binding.put("build", this);
+        binding.put("_entry", value);
+        binding.put("_parent", parent);
+        binding.put("_context", context);
+        binding.put("_build", this);
         LOGGER.log(Level.FINE, "processMask: Context: {0}", binding);
         try {
             Template template = mask.getTemplate();

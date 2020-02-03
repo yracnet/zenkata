@@ -18,13 +18,23 @@ package dev.yracnet.zenkata.impl;
 import java.util.List;
 import dev.yracnet.zenkata.EntryItem;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Willyams Yujra
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class EntryItemImpl implements EntryItem {
+
+    @XmlElement
     private Object value;
+
+    @XmlElement
     private final List<Object> children = new ArrayList<>();
 
     public EntryItemImpl(Object value) {

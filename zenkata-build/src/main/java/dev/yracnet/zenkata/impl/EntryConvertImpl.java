@@ -15,17 +15,13 @@
  */
 package dev.yracnet.zenkata.impl;
 
-import groovy.json.JsonSlurper;
 import dev.yracnet.zenkata.EntryConvert;
 import dev.yracnet.zenkata.EntryItem;
-
 /**
  *
  * @author Willyams Yujra
  */
-public class EntryConvertImpl implements EntryConvert{
-
-    private final JsonSlurper jsonSlurper = new JsonSlurper();
+public class EntryConvertImpl implements EntryConvert {
 
     @Override
     public boolean test(EntryItem o) {
@@ -34,13 +30,7 @@ public class EntryConvertImpl implements EntryConvert{
 
     @Override
     public Object apply(EntryItem o) {
-        String jsonString = createJson(o);
-        return jsonSlurper.parseText(jsonString);
+        return o;
     }
 
-    private String createJson(Object o) {
-        return "{}";
-    }
-    
-    
 }

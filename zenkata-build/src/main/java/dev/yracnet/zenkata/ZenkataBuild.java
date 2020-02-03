@@ -151,21 +151,26 @@ public abstract class ZenkataBuild {
 	public abstract void putContext(String name, Object value);
 
 	/**
+	 * <p>
 	 * Execute all Phase for generate
-	 * 
-	 * FoeEach (EntryItem item, EntryMask mask) Then
-	 * 
-	 * mask = EntryRead(mask)
-	 * 
-	 * item = EntryConvert (item)
-	 * 
-	 * result = Apply (item, mask, context)
-	 * 
-	 * result = ResultRead(result)
-	 * 
-	 * result = ResultParser(result)
-	 * 
-	 * ResultWrite(result)
+	 * </p>
+	 * <p>
+	 * ForEach (EntryItem item, EntryMask mask) Then
+	 * </p>
+	 * <ol>
+	 * <li>
+	 * mask = EntryRead(mask)</li>
+	 * <li>
+	 * item = EntryConvert (item)</li>
+	 * <li>
+	 * result = Apply (item, mask, context)</li>
+	 * <li>
+	 * result = ResultRead(result)</li>
+	 * <li>
+	 * result = ResultParser(result)</li>
+	 * <li>
+	 * ResultWrite(result)</li>
+	 * </ol>
 	 * 
 	 * @return Result Object for the Process Finish
 	 */
