@@ -38,31 +38,26 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ResultGroup implements Result {
-
-    @XmlAttribute(name = "skip")
-    private boolean skip;
-    @XmlAttribute(name = "parser")
-    private String parser;
-    @XmlAttribute(name = "module")
-    private String module;
-    @XmlAttribute(name = "layer")
-    private String layer;
-    @XmlAttribute(name = "dir")
-    private String dir;
-
-    @XmlElements({
-        @XmlElement(name = "result-group", type = ResultGroup.class),
-        //@XmlElement(name = "result-java", type = ResultFileJava.class),
-        //@XmlElement(name = "result-html", type = ResultFileHtml.class),
-        //@XmlElement(name = "result-xml", type = ResultFileXml.class),
-        //@XmlElement(name = "result-js", type = ResultFileJs.class),
-        @XmlElement(name = "result-file", type = ResultFile.class)
-    })
-    private final List<Result> resutlList = new ArrayList<>();
-
-    public void addResult(Result result) {
-        if (result != null) {
-            resutlList.add(result);
-        }
-    }
+	@XmlAttribute(name = "skip")
+	private boolean skip;
+	@XmlAttribute(name = "parser")
+	private String parser;
+	@XmlAttribute(name = "module")
+	private String module;
+	@XmlAttribute(name = "layer")
+	private String layer;
+	@XmlAttribute(name = "dir")
+	private String dir;
+	@XmlElements({@XmlElement(name = "result-group", type = ResultGroup.class),
+			// @XmlElement(name = "result-java", type = ResultFileJava.class),
+			// @XmlElement(name = "result-html", type = ResultFileHtml.class),
+			// @XmlElement(name = "result-xml", type = ResultFileXml.class),
+			// @XmlElement(name = "result-js", type = ResultFileJs.class),
+			@XmlElement(name = "result-file", type = ResultFile.class)})
+	private final List<Result> resutlList = new ArrayList<>();
+	public void addResult(Result result) {
+		if (result != null) {
+			resutlList.add(result);
+		}
+	}
 }

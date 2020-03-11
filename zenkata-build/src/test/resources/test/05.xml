@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+_name = "s";
+_package = "s";
+_withExample = "s";
+_name = "s";
+_my_var = "********parent**************";
+//mi scrip
+%>
+<result-group  dir="Test05">
+    <result-file name="ParGrupoValidate" type="java"  pkg="java" skip="${_withExample}">
+import java.util.List;
+
+<%
+//mi scrip
+%>
+public class ParGrupoValidate {
+}
+    </result-file>
+    <result-file name="in_script" type="xml">
+        <persistence >
+<%
+//mi scrip
+%>
+        </persistence>
+    </result-file>
+    
+    <result-file name="in_variable" type="xml"  include="file/05.txt"/>
+<%
+def aa = [1,2]
+aa.each {
+
+_my_var = "parent*"+it;
+%>
+    <result-file name="in_variable-${it}" type="xml"  include="file/05.txt"/>
+<%
+}
+%>
+    <result-file name="in_error" type="xml"  include="file/ax.txt">
+        error file
+    </result-file>
+    <result-file name="${_name}-model" type="jpa"  pkg="_5">
+        <entity-mappings >
+<%
+//mi scrip
+%>
+        </entity-mappings>
+    </result-file>
+</result-group>

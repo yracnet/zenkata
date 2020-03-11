@@ -30,34 +30,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class EntryItemImpl implements EntryItem {
+	@XmlElement
+	private Object value;
+	@XmlElement
+	private final List<Object> children = new ArrayList<>();
+	public EntryItemImpl(Object value) {
+		this.value = value;
+	}
 
-    @XmlElement
-    private Object value;
+	@Override
+	public void setValue(Object value) {
+		this.value = value;
+	}
 
-    @XmlElement
-    private final List<Object> children = new ArrayList<>();
+	@Override
+	public Object getValue() {
+		return value;
+	}
 
-    public EntryItemImpl(Object value) {
-        this.value = value;
-    }
+	@Override
+	public void addChildren(Object value) {
+		children.add(value);
+	}
 
-    @Override
-    public void setValue(Object value) {
-        this.value = value;
-    }
-
-    @Override
-    public Object getValue() {
-        return value;
-    }
-
-    @Override
-    public void addChildren(Object value) {
-        children.add(value);
-    }
-
-    @Override
-    public List<Object> getChildren() {
-        return children;
-    }
+	@Override
+	public List<Object> getChildren() {
+		return children;
+	}
 }

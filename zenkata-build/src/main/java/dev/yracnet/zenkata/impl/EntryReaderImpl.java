@@ -15,6 +15,7 @@
  */
 package dev.yracnet.zenkata.impl;
 
+import dev.yracnet.zenkata.EntryException;
 import dev.yracnet.zenkata.EntryMask;
 import dev.yracnet.zenkata.EntryReader;
 import groovy.text.SimpleTemplateEngine;
@@ -40,70 +41,67 @@ import org.codehaus.groovy.control.CompilationFailedException;
 @Getter
 @ToString
 public class EntryReaderImpl implements EntryReader {
+	private static final Logger LOGGER = Logger.getLogger(EntryReaderImpl.class.getName());
+	private TemplateEngine engine = new SimpleTemplateEngine();
+	private ClassLoader classLoader = EntryReaderImpl.class.getClassLoader();
+	private final List<File> directory = new ArrayList<>();
+	@Override
+	public void addSearchDirectory(String path) {
+		directory.add(new File(path));
+	}
 
-    private static final Logger LOGGER = Logger.getLogger(EntryReaderImpl.class.getName());
+	public void addDirectory(File path) {
+		directory.add(path);
+	}
 
-    private TemplateEngine engine = new SimpleTemplateEngine();
-    private ClassLoader classLoader = EntryReaderImpl.class.getClassLoader();
-    private final List<File> directory = new ArrayList<>();
+	@Override
+	public EntryMask readMask(String name) {
+		File file = searchFirstFile(name);
+		return createMask(file);
+	}
 
-    @Override
-    public void addSearchDirectory(String path) {
-        directory.add(new File(path));
-    }
+	@Override
+	public List<EntryMask> readMaskRecursive(String name) {
+		LOGGER.log(Level.INFO, "ADD MASK NAME {0}", name);
+		File dir = searchFirstFile(name);
+		List<EntryMask> list = new ArrayList<>();
+		if (dir != null && dir.isDirectory()) {
+			File files[] = dir.listFiles(it -> it.isFile());
+			for (File file : files) {
+				LOGGER.log(Level.INFO, "ADD MASK {0}", file);
+				EntryMask mask = createMask(file);
+				list.add(mask);
+			}
+		}
+		return list;
+	}
 
-    public void addDirectory(File path) {
-        directory.add(path);
-    }
+	private EntryMask createMask(File file) {
+		EntryMaskImpl mask = new EntryMaskImpl();
+		mask.setFile(file);
+		if (file != null && file.exists()) {
+			try {
+				String xml = ZenkataHelp.processMaskXml(file);
+				Template template = engine.createTemplate(xml);
+				mask.setTemplate(template);
+			} catch (EntryException | IOException | ClassNotFoundException | CompilationFailedException e) {
+				// mask.setException(e);
+			}
+		}
+		return mask;
+	}
 
-    @Override
-    public EntryMask readMask(String name) {
-        File file = searchFirstFile(name);
-        return createMask(file);
-    }
-
-    @Override
-    public List<EntryMask> readMaskRecursive(String name) {
-        LOGGER.log(Level.INFO, "ADD MASK NAME {0}", name);
-        File dir = searchFirstFile(name);
-        List<EntryMask> list = new ArrayList<>();
-        if (dir != null && dir.isDirectory()) {
-            File files[] = dir.listFiles(it -> it.isFile());
-            for (File file : files) {
-                LOGGER.log(Level.INFO, "ADD MASK {0}", file);
-                EntryMask mask = createMask(file);
-                list.add(mask);
-            }
-        }
-        return list;
-    }
-
-    private EntryMask createMask(File file) {
-        EntryMaskImpl mask = new EntryMaskImpl();
-        mask.setFile(file);
-        if (file != null && file.exists()) {
-            try {
-                Template template = engine.createTemplate(file);
-                mask.setTemplate(template);
-            } catch (IOException | ClassNotFoundException | CompilationFailedException e) {
-                //mask.setException(e);
-            }
-        }
-        return mask;
-    }
-
-    private File searchFirstFile(String name) {
-        for (File dir : directory) {
-            File file = new File(dir, name);
-            if (file.exists()) {
-                return file;
-            }
-        }
-        URL url = classLoader.getResource(name);
-        if (url != null) {
-            return new File(url.getFile());
-        }
-        return null;
-    }
-
+	private File searchFirstFile(String name) {
+		for (File dir : directory) {
+			File file = new File(dir, name);
+			if (file.exists()) {
+				return file;
+			}
+		}
+		URL url = classLoader.getResource(name);
+		if (url != null) {
+			return new File(url.getFile());
+		}
+		return null;
+	}
 }

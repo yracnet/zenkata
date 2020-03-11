@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result-group dir="Test04">
+    <result-file name="04-A" type="xml" include="file/b.xml"/>
+    <result-file name="04-B" type="xml" include="file/b.xml">
+        contenido a ignorar
+    </result-file>
+    <result-group>
+        <result-file name="04-A" type="txt" include="file/a.txt"/>
+        <result-file name="04-B" type="txt">
+            ${new File(_runner.directory, 'file/a.txt').getText()}
+        </result-file>
+        <result-file name="04-B" type="txt">
+            ${_runner.include('file/a.txt', null)}
+        </result-file>
+    </result-group>
+</result-group>

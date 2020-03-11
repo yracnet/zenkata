@@ -24,14 +24,12 @@ import java.util.List;
  * @author Willyams Yujra
  */
 public interface EntryItem extends Entry {
+	public static final EntryItem BLANK = new EntryItemImpl(new HashMap<>());
+	void setValue(Object value);
 
-    public static final EntryItem BLANK = new EntryItemImpl(new HashMap<>());
+	Object getValue();
 
-    void setValue(Object value);
+	void addChildren(Object value);
 
-    Object getValue();
-
-    void addChildren(Object value);
-
-    List<Object> getChildren();
+	List<Object> getChildren();
 }

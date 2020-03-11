@@ -33,69 +33,68 @@ import javax.xml.bind.annotation.XmlValue;
 @lombok.Setter
 @lombok.ToString(exclude = {"parent", "content", "comment"})
 public class ResultFile implements Result {
+	@XmlTransient
+	private ResultGroup parent;
+	@XmlAttribute(name = "skip")
+	private boolean skip;
+	@XmlAttribute(name = "parser")
+	private String parser;
+	@XmlAttribute(name = "module")
+	private String module;
+	@XmlAttribute(name = "layer")
+	private String layer;
+	@XmlAttribute(name = "dir")
+	private String dir;
+	@XmlAttribute(name = "pkg")
+	private String pkg;
+	@XmlAttribute(name = "name")
+	private String name;
+	@XmlAttribute(name = "type")
+	private String type;
+	@XmlAttribute(name = "append")
+	private boolean append;
+	@XmlAttribute(name = "comment")
+	private String comment;
+	@XmlAttribute(name = "include")
+	private String include;
+	@XmlValue
+	private String content;
+	public String getResultPath() {
+		StringBuilder path = new StringBuilder("/");
+		if (parent != null && parent.getDir() != null) {
+			path.append(parent.getDir()).append("/");
+		}
+		if (dir != null) {
+			path.append(dir);
+		}
+		if (layer != null) {
+			path.append("/").append(layer).append("/");
+		}
+		if (pkg != null) {
+			path.append("/").append(pkg.replace(".", "/")).append("/");
+		}
+		path.append("/").append(name).append(".").append(type);
+		return path.toString().replace("//", "/").replace("//", "/");
+	}
 
-    @XmlTransient
-    private ResultGroup parent;
-    @XmlAttribute(name = "skip")
-    private boolean skip;
-    @XmlAttribute(name = "parser")
-    private String parser;
-    @XmlAttribute(name = "module")
-    private String module;
-    @XmlAttribute(name = "layer")
-    private String layer;
-    @XmlAttribute(name = "dir")
-    private String dir;
-    @XmlAttribute(name = "pkg")
-    private String pkg;
-    @XmlAttribute(name = "name")
-    private String name;
-    @XmlAttribute(name = "type")
-    private String type;
-    @XmlAttribute(name = "append")
-    private boolean append;
-    @XmlAttribute(name = "comment")
-    private String comment;
-    @XmlValue
-    private String content;
+	public void setParent(ResultGroup parent) {
+		this.parent = parent;
+		if (parent != null) {
+			parser = inherentValue(parser, parent.getParser(), "");
+			module = inherentValue(module, parent.getModule(), "");
+			layer = inherentValue(layer, parent.getLayer(), "");
+		}
+	}
 
-    public String getResultPath() {
-        StringBuilder path = new StringBuilder("/");
-        if (parent != null && parent.getDir() != null) {
-            path.append(parent.getDir()).append("/");
-        }
-        if (dir != null) {
-            path.append(dir);
-        }
-        if (layer != null) {
-            path.append("/").append(layer).append("/");
-        }
-        if (pkg != null) {
-            path.append("/").append(pkg.replace(".", "/")).append("/");
-        }
-        path.append("/").append(name).append(".").append(type);
-        return path.toString().replace("//", "/").replace("//", "/");
-    }
+	private String inherentValue(String value, String parentValue, String defaultValue) {
+		return value != null && !value.isBlank() ? value : parentValue != null && !parentValue.isBlank() ? parentValue : defaultValue;
+	}
 
-    public void setParent(ResultGroup parent) {
-        this.parent = parent;
-        if (parent != null) {
-            parser = inherentValue(parser, parent.getParser(), "");
-            module = inherentValue(module, parent.getModule(), "");
-            layer = inherentValue(layer, parent.getLayer(), "");
-        }
-    }
+	public byte[] getContentBytes() {
+		return content == null ? null : content.getBytes();
+	}
 
-    private String inherentValue(String value, String parentValue, String defaultValue) {
-        return value != null && !value.isBlank() ? value : parentValue != null && !parentValue.isBlank() ? parentValue : defaultValue;
-    }
-
-    public byte[] getContentBytes() {
-        return content == null ? null : content.getBytes();
-    }
-
-    public byte[] getCommentBytes() {
-        return comment == null ? null : comment.getBytes();
-    }
-
+	public byte[] getCommentBytes() {
+		return comment == null ? null : comment.getBytes();
+	}
 }

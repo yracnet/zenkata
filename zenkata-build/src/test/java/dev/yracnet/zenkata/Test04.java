@@ -5,25 +5,27 @@
  */
 package dev.yracnet.zenkata;
 
+import dev.yracnet.zenkata.impl.EntryItemImpl;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Test;
+
 /**
  *
- @author Willyams Yujra
+ * @author Willyams Yujra
  */
 public class Test04 {
-	public static void main(String[] args) {
-        String path[] = {
-            "/store/work/dev/dev-01/zenkata/zenkata-crud/../temp/param-admin/param-admin-faces/pom.xml",
-            "/store/work/dev/dev-01/zenkata/zenkata-crud/../../../../pom.xml",
-            "/store/dev/../v1/../zenkata-crud/../../../../pom.xml",
-            "/store/./dev/../v1/../zenkata-crud/../../../../pom.xml"
-        };
-        for (String p : path) {
-            System.out.println("1--->" + p);
-            p = p.replace("/./", "/");
-            while(p.contains("..")){
-                p = p.replaceAll("\\/([^\\/]*)\\/(\\.\\.)", "");
-            }
-            System.out.println("2--->" + p);
-        }
-    }
+	@Test
+	public void run() throws Exception {
+		Map<String, Object> values = new HashMap<>();
+		values.put("a", 1);
+		EntryItem item = new EntryItemImpl(values);
+		ZenkataBuild build = ZenkataBuild.getCreateInstance();
+		build.setOutput("output");
+		build.addMaskString("test/04.xml");
+		build.addItem(item);
+		build.putContext("a", "");
+		Result result = build.generate();
+		System.out.println("-->" + result);
+	}
 }

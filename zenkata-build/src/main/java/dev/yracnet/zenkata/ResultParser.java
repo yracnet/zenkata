@@ -29,6 +29,5 @@ import dev.yracnet.zenkata.xml.ResultFile;
  */
 public interface ResultParser {
 	public static final ResultParser DEFAULT = new ResultParserImpl();
-
 	public ResultFile parser(ResultFile item) throws ResultException;
 }

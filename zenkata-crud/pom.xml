@@ -9,7 +9,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>zenkata-build</artifactId>
-            <version>0.2.3</version>
+            <version>0.3.0</version>
         </dependency>
     </dependencies>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 </project>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<result-group>
+<result-group dir="Test01">
     <result-file name="01-A" type="xml" >
-        <text>Archivo 01-A</text>
+        <text>Archivo 01-A ??</text>
     </result-file>
     <result-file name="01-B" type="xml">
-        <text>Archivo 01-B</text>
+        <text>Archivo 01-B ??</text>
     </result-file>
 </result-group>

@@ -8,28 +8,25 @@ package dev.yracnet.zenkata;
 import dev.yracnet.zenkata.impl.EntryItemImpl;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.Test;
 
 /**
  *
  * @author Willyams Yujra
  */
 public class Test01 {
-	public static void main(String[] args) throws Exception {
-
-        Map<String, Object> values = new HashMap<>();
-        values.put("a", 1);
-        EntryItem item = new EntryItemImpl(values);
-
-        ZenkataBuild build = ZenkataBuild.getInstance();
-        build.setOutput("output");
-        build.addMaskString("test/01.xml");
-        build.addMaskString("test/02.xml");
-        //build.putLayer("view", "${it.group}");
-        //build.addFactory(null);
-        build.addItem(item);
-        //build.putParser(null, null);
-        build.putContext("a", "");
-        Result result = build.generate();
-        System.out.println("-->" + result);
-    }
+	@Test
+	public void run() throws Exception {
+		Map<String, Object> values = new HashMap<>();
+		values.put("a", 1);
+		EntryItem item = new EntryItemImpl(values);
+		ZenkataBuild build = ZenkataBuild.getCreateInstance();
+		build.setOutput("output");
+		build.addMaskString("test/01.xml");
+		build.addMaskString("test/02.xml");
+		build.addItem(item);
+		build.putContext("a", "");
+		Result result = build.generate();
+		System.out.println("-->" + result);
+	}
 }

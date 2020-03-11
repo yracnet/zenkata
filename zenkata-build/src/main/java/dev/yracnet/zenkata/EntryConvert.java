@@ -23,7 +23,6 @@ import dev.yracnet.zenkata.impl.EntryConvertImpl;
  */
 public interface EntryConvert {
 	public static final EntryConvert NONE = new EntryConvertImpl();
-
 	public boolean test(EntryItem o);
 
 	public Object apply(EntryItem o);

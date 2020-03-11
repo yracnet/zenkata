@@ -23,20 +23,25 @@ import dev.yracnet.zenkata.xml.ResultFile;
  * @author Willyams Yujra
  */
 public class ResultParserImpl implements ResultParser {
-
-    @Override
-    public ResultFile parser(ResultFile item) {
-        String type = item.getType();
-        if ("java".equals(type)) {
-            String content = "package " + item.getPkg() + ";\n\n" + item.getContent();
-            item.setContent(content);
-        }
-        if ("xml".equals(type)) {
-            String content = item.getContent();
-            content = content == null ? "<!-- ERROR -->" : content.trim();
-            item.setContent(content);
-        }
-        return item;
-    }
-
+	@Override
+	public ResultFile parser(ResultFile item) {
+		String type = item.getType();
+		if ("txt".equals(type)) {
+			String content = item.getContent();
+			content = content == null ? "<!-- ERROR -->" : content.trim();
+			item.setContent(content);
+		}
+		if ("java".equals(type)) {
+			String content = item.getContent();
+			content = content == null ? "<!-- ERROR -->" : content.trim();
+			content = "package " + item.getPkg() + ";\n\n" + content;
+			item.setContent(content);
+		}
+		if ("xml".equals(type)) {
+			String content = item.getContent();
+			content = content == null ? "<!-- ERROR -->" : content.trim();
+			item.setContent(content);
+		}
+		return item;
+	}
 }

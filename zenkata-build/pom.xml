@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.yracnet.zenkata</groupId>
     <artifactId>zenkata-build</artifactId>
-    <version>0.2.3</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
     <name>zenkata-build</name>
     <description>Zenkata Build is a api for write file from XML Result</description>
@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>com.github.yracnet.maven</groupId>
                 <artifactId>qualitycode-maven-plugin</artifactId>
-                <version>0.1.1</version>
+                <version>0.1.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -160,6 +160,12 @@
             <groupId>com.github.yracnet.formatter</groupId>
             <artifactId>formatter-build</artifactId>
             <version>0.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

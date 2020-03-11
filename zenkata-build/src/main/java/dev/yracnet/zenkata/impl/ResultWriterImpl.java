@@ -36,65 +36,62 @@ import java.nio.file.StandardOpenOption;
  * @author Willyams Yujra
  */
 public class ResultWriterImpl implements ResultWriter {
+	private static final Logger LOGGER = Logger.getLogger(ResultWriterImpl.class.getName());
+	private final ZenkataBuild build;
+	public ResultWriterImpl(ZenkataBuild build) {
+		this.build = build;
+	}
 
-    private static final Logger LOGGER = Logger.getLogger(ResultWriterImpl.class.getName());
+	@Override
+	public void write(Result result, File dir) {
+		if (result.isSkip()) {
+			LOGGER.log(Level.INFO, "Ignore Write Result: {0}", result);
+		} else if (result instanceof ResultFile) {
+			try {
+				writeFile((ResultFile) result, dir);
+			} catch (ResultException e) {
+				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, "Error Write Result", e);
+			}
+		} else if (result instanceof ResultGroup) {
+			ResultGroup group = (ResultGroup) result;
+			group.getResutlList().forEach(it -> write(it, dir));
+		}
+	}
 
-    private final ZenkataBuild build;
-
-    public ResultWriterImpl(ZenkataBuild build) {
-        this.build = build;
-    }
-
-    @Override
-    public void write(Result result, File dir) {
-        if (result.isSkip()) {
-            LOGGER.log(Level.INFO, "Ignore Write Result: {0}", result);
-        } else if (result instanceof ResultFile) {
-            try {
-                writeFile((ResultFile) result, dir);
-            } catch (ResultException e) {
-                e.printStackTrace();
-                LOGGER.log(Level.SEVERE, "Error Write Result", e);
-            }
-        } else if (result instanceof ResultGroup) {
-            ResultGroup group = (ResultGroup) result;
-            group.getResutlList().forEach(it -> write(it, dir));
-        }
-    }
-
-    private void writeFile(ResultFile result, File dir) throws ResultException {
-        LOGGER.log(Level.FINE, "Write Directory: {0}", dir);
-        LOGGER.log(Level.FINE, "Write Result: {0}", result);
-        LOGGER.log(Level.INFO, "Write Result: {0}", result.getResultPath());
-        ResultParser parser = build.getParser(result.getParser());
-        result = parser.parser(result);
-        File out = new File(dir, result.getResultPath());
-        File parent = out.getParentFile();
-        if (!parent.exists()) {
-            parent.mkdirs();
-        }
-        if (!result.isAppend()) {
-            out.delete();
-        }
-        Path path = Paths.get(out.toURI());
-        LOGGER.log(Level.INFO, "Write Result: {0}", path);
-        byte[] comment = result.getCommentBytes();
-        if (comment != null) {
-            StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
-            try {
-                Files.write(path, comment, option);
-            } catch (IOException e) {
-                throw new ResultException("Error in write comment data in file: " + out, e);
-            }
-        }
-        byte[] content = result.getContentBytes();
-        if (content != null) {
-            StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
-            try {
-                Files.write(path, content, option);
-            } catch (IOException e) {
-                throw new ResultException("Error in write content data in file: " + out, e);
-            }
-        }
-    }
+	private void writeFile(ResultFile result, File dir) throws ResultException {
+		LOGGER.log(Level.FINE, "Write Directory: {0}", dir);
+		LOGGER.log(Level.FINE, "Write Result: {0}", result);
+		LOGGER.log(Level.INFO, "Write Result: {0}", result.getResultPath());
+		ResultParser parser = build.getParser(result.getParser());
+		result = parser.parser(result);
+		File out = new File(dir, result.getResultPath());
+		File parent = out.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+		if (!result.isAppend()) {
+			out.delete();
+		}
+		Path path = Paths.get(out.toURI());
+		LOGGER.log(Level.INFO, "Write Result: {0}", path);
+		byte[] comment = result.getCommentBytes();
+		if (comment != null) {
+			StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
+			try {
+				Files.write(path, comment, option);
+			} catch (IOException e) {
+				throw new ResultException("Error in write comment data in file: " + out, e);
+			}
+		}
+		byte[] content = result.getContentBytes();
+		if (content != null) {
+			StandardOpenOption option = out.exists() ? StandardOpenOption.APPEND : StandardOpenOption.CREATE;
+			try {
+				Files.write(path, content, option);
+			} catch (IOException e) {
+				throw new ResultException("Error in write content data in file: " + out, e);
+			}
+		}
+	}
 }

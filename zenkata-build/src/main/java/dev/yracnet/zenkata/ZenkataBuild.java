@@ -24,7 +24,7 @@ import java.util.logging.LogManager;
 
 /**
  *
- @author Willyams Yujra
+ * @author Willyams Yujra
  */
 public abstract class ZenkataBuild {
 	static {
@@ -35,10 +35,8 @@ public abstract class ZenkataBuild {
 			e.printStackTrace();
 		}
 	}
-	private static final ZenkataBuild INSTANCE = new ZenkataBuildImpl();
-
-	public static ZenkataBuild getInstance() {
-		return INSTANCE;
+	public static ZenkataBuild getCreateInstance() {
+		return new ZenkataBuildImpl();
 	}
 
 	/**
@@ -158,23 +156,35 @@ public abstract class ZenkataBuild {
 	 * ForEach (EntryItem item, EntryMask mask) Then
 	 * </p>
 	 * <ol>
-	 * <li>
-	 * mask = EntryRead(mask)</li>
-	 * <li>
-	 * item = EntryConvert (item)</li>
-	 * <li>
-	 * result = Apply (item, mask, context)</li>
-	 * <li>
-	 * result = ResultRead(result)</li>
-	 * <li>
-	 * result = ResultParser(result)</li>
-	 * <li>
-	 * ResultWrite(result)</li>
+	 * <li>mask = EntryRead(mask)</li>
+	 * <li>item = EntryConvert (item)</li>
+	 * <li>result = Apply (item, mask, context)</li>
+	 * <li>result = ResultRead(result)</li>
+	 * <li>result = ResultParser(result)</li>
+	 * <li>ResultWrite(result)</li>
 	 * </ol>
 	 * 
 	 * @return Result Object for the Process Finish
 	 */
 	public abstract Result generate();
+
+	/**
+	 * <p>
+	 * Clean all List config
+	 * </p>
+	 * <p>
+	 * Clean:
+	 * </p>
+	 * <ol>
+	 * <li>mask</li>
+	 * <li>item</li>
+	 * <li>context</li>
+	 * <li>convert</li>
+	 * <li>parser</li>
+	 * </ol>
+	 * 
+	 */
+	public abstract void clear();
 
 	/**
 	 * Execution Process on Demand
@@ -193,4 +203,46 @@ public abstract class ZenkataBuild {
 	 * @return
 	 */
 	public abstract Object applyConvert(EntryItem item);
+
+	/**
+	 * Change Default EntryReader
+	 * 
+	 * @param reader
+	 */
+	public abstract void setEntryReader(EntryReader reader);
+
+	/**
+	 * Return EntryReader
+	 * 
+	 * @return
+	 */
+	public abstract EntryReader getEntryReader();
+
+	/**
+	 * Change Default ResultReader
+	 * 
+	 * @param reader
+	 */
+	public abstract void setResultReader(ResultReader reader);
+
+	/**
+	 * Return ResultReader
+	 * 
+	 * @return
+	 */
+	public abstract ResultReader getResultReader();
+
+	/**
+	 * Change Default ResultWriter
+	 * 
+	 * @param writer
+	 */
+	public abstract void setResultWriter(ResultWriter writer);
+
+	/**
+	 * Return ResultWriter
+	 * 
+	 * @return
+	 */
+	public abstract ResultWriter getResultWriter();
 }

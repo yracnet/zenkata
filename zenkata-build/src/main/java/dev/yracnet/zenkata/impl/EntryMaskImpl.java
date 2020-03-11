@@ -30,13 +30,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class EntryMaskImpl implements EntryMask {
-    
-    private File file;
-    private Template template;
-    
-    @Override
-    public boolean isExist() {
-        return file != null && template != null;
-    }
-    
+	private File file;
+	private Template template;
+	@Override
+	public boolean isExist() {
+		return file != null && template != null;
+	}
 }

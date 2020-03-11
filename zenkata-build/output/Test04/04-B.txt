@@ -1,0 +1,4 @@
+TXT simple contenido
+simple content A
+=========================
+contenido de otros archivo

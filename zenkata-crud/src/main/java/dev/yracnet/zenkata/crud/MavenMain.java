@@ -24,7 +24,7 @@ import java.io.File;
  */
 public class MavenMain {
 	public static void main(String[] args) {
-		ZenkataBuild build = ZenkataBuild.getInstance();
+		ZenkataBuild build = ZenkataBuild.getCreateInstance();
 		File dir = build.getCurrentDirectory();
 		build.addItemBlank();
 		build.addMaskDirectory("maven");
@@ -39,5 +39,6 @@ public class MavenMain {
 		build.putContext("providerList", new String[]{"service"});
 		build.putContext("withExample", true);
 		build.generate();
+                build.clear();
 	}
 }

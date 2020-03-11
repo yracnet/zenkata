@@ -17,20 +17,19 @@ package dev.yracnet.zenkata.impl;
 
 import dev.yracnet.zenkata.EntryConvert;
 import dev.yracnet.zenkata.EntryItem;
+
 /**
  *
  * @author Willyams Yujra
  */
 public class EntryConvertImpl implements EntryConvert {
+	@Override
+	public boolean test(EntryItem o) {
+		return true;
+	}
 
-    @Override
-    public boolean test(EntryItem o) {
-        return true;
-    }
-
-    @Override
-    public Object apply(EntryItem o) {
-        return o;
-    }
-
+	@Override
+	public Object apply(EntryItem o) {
+		return o;
+	}
 }

@@ -22,10 +22,9 @@ import java.util.List;
  * @author Willyams Yujra
  */
 public interface EntryReader {
+	void addSearchDirectory(String name);
 
-    void addSearchDirectory(String name);
-    
-    EntryMask readMask(String name);
+	EntryMask readMask(String name);
 
-    List<EntryMask> readMaskRecursive(String name);
+	List<EntryMask> readMaskRecursive(String name);
 }
