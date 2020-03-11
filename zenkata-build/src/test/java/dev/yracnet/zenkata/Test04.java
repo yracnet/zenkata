@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author Willyams Yujra
  */
 public class Test04 {
-	@Test
+	// @Test
 	public void run() throws Exception {
 		Map<String, Object> values = new HashMap<>();
 		values.put("a", 1);

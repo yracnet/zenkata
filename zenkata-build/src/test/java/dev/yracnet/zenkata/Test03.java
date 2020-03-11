@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Willyams Yujra
  */
 public class Test03 {
-	@Test
+	// @Test
 	public void run() throws Exception {
 		String xmls[] = new String[]{"<result-file name=\"name\"><![CDATA[<a>a</a> ]]></result-file>", "<result-file name='name'><![CDATA[<a>a</a> ]]></result-file>",
 				"<result-file\nname='name'><![CDATA[<a>a</a> ]]></result-file>", "<result-file><![CDATA[<a>a</a> ]]></result-file>",

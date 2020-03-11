@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result-group>
+    <result-file name="01-A" type="xml" >
+        <text>
+            ${_context.text}
+        </text>
+    </result-file>
+</result-group>

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.xml.transform.Source;
@@ -34,6 +35,19 @@ import javax.xml.transform.stream.StreamSource;
  * @author Willyams Yujra
  */
 public class ZenkataHelp {
+	public static String readContent(File file) throws Exception {
+		return new String(Files.readAllBytes(Paths.get(file.toURI())));
+	}
+
+	public static String readContent(String name) throws Exception {
+		return readContent(name, ZenkataHelp.class.getClassLoader());
+	}
+
+	public static String readContent(String name, ClassLoader loader) throws Exception {
+		URL url = loader.getResource(name);
+		return new String(Files.readAllBytes(Paths.get(url.toURI())));
+	}
+
 	public static String processMaskXml(File file) throws EntryException {
 		try {
 			String xml = new String(Files.readAllBytes(Paths.get(file.toURI())));

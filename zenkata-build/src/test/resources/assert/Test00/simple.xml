@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<result-group dir="aaaa" skip="false">
+    <result-file append="false" name="a1" skip="false">HOLA!</result-file>
+    <result-file append="false" name="a1" skip="false">HOLA!</result-file>
+    <result-file append="false" name="a1" skip="false">HOLA!</result-file>
+</result-group>

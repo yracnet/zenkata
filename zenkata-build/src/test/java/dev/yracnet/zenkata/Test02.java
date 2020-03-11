@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author Willyams Yujra
  */
 public class Test02 {
-	@Test
+	// @Test
 	public void run() throws Exception {
 		ResultReader resultReader = new ResultReaderImpl();
 		String xmls[] = new String[]{

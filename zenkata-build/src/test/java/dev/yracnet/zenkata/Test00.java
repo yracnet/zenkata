@@ -7,29 +7,45 @@ package dev.yracnet.zenkata;
 
 import dev.yracnet.zenkata.xml.ResultFile;
 import dev.yracnet.zenkata.xml.ResultGroup;
-import javax.xml.bind.JAXBContext;
-
-import javax.xml.bind.Marshaller;
 import org.junit.Test;
 
 /**
  *
  * @author Willyams Yujra
  */
-public class Test00 {
+public class Test00 extends TestBase {
 	@Test
-	public void run() throws Exception {
-		ResultGroup group = new ResultGroup();
-		group.setDir("aaaa");
+	public void simple() throws Exception {
+		ResultGroup root = new ResultGroup();
+		root.setDir("aaaa");
 		ResultFile file = new ResultFile();
 		file.setName("a1");
 		file.setContent("HOLA!");
-		group.addResult(file);
-		group.addResult(file);
-		group.addResult(file);
-		JAXBContext jaxbContext = JAXBContext.newInstance(new Class<?>[]{ResultGroup.class, ResultFile.class});
-		Marshaller marshaller = jaxbContext.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		marshaller.marshal(group, System.out);
+		root.addResult(file);
+		root.addResult(file);
+		root.addResult(file);
+		String xmlResult = marshallerResult(root);
+                System.out.println("-->" +xmlResult);
+		assertXmlFile(xmlResult, "assert/Test00/simple.xml");
+	}
+
+	@Test
+	public void grupo() throws Exception {
+		ResultGroup g1 = new ResultGroup();
+		g1.setDir("aaaa");
+		ResultFile file = new ResultFile();
+		file.setName("a1");
+		file.setContent("HOLA!");
+		g1.addResult(file);
+		g1.addResult(file);
+		ResultGroup root = new ResultGroup();
+		root.setDir("bbb");
+		ResultGroup g2 = new ResultGroup();
+		g2.setDir("cccc");
+		g2.addResult(file);
+		root.addResult(g1);
+		root.addResult(g2);
+		String xmlResult = marshallerResult(root);
+		assertXmlFile(xmlResult, "assert/Test00/grupo.xml");
 	}
 }

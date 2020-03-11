@@ -14,19 +14,19 @@ import org.junit.Test;
  *
  * @author Willyams Yujra
  */
-public class Test01 {
+public class Test01 extends TestBase {
 	@Test
 	public void run() throws Exception {
 		Map<String, Object> values = new HashMap<>();
-		values.put("a", 1);
+		values.put("text", "Mi mensaje....");
 		EntryItem item = new EntryItemImpl(values);
 		ZenkataBuild build = ZenkataBuild.getCreateInstance();
-		build.setOutput("output");
-		build.addMaskString("test/01.xml");
-		build.addMaskString("test/02.xml");
+		build.setOutput("output/Test01");
+		build.addMaskString("test/Test01/01.xml");
 		build.addItem(item);
-		build.putContext("a", "");
 		Result result = build.generate();
-		System.out.println("-->" + result);
+		String xmlResult = marshallerResult(result);
+		System.out.println("-->" + xmlResult);
+		// assertXmlFile(xmlResult, "");
 	}
 }
