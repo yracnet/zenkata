@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+def model = _entry.value;
+def fields = model.fields;
+def config = _entry.config;
+def entity = model.define('entity');
+entity.pkgType = "com.hiskasoft.sas.model";
+def entityFields = model.defineFields('entity');
+def data   = model.define('data');
+def dataFields = model.defineFields('data');
+%>
+<result-group dir="Test04">
+    <%
+    data.pkgType = "${config.packageBase}.data";
+    entity.pkgType = "${config.packageBase}.model";
+    %>
+    <result-file name="04-A" type="xml" include="file/b.xml"/>
+    <result-file name="04-B" type="xml" include="fil${aaa['hhh']}e/b.xml">
+        contenido a ignorar
+    </result-file>
+<result-file name="04-B" type="xml" include="fil${aaa['hhh']}e/b.xml">
+    <%
+    data.pkgType = "${config.packageBase}.data";
+    entity.pkgType = "${config.packageBase}.model";
+    %>
+    demo.....
+    <%
+    data.pkgType = "${config.packageBase}.data";
+    entity.pkgType = "${config.packageBase}.model";
+    %>
+</result-file>
+    <%
+    data.pkgType = "${config.packageBase}.data";
+    entity.pkgType = "${config.packageBase}.model";
+    %>
+    <result-group>
+        <result-file name="04-A" type="txt" include="file/a.txt"/>
+        <result-file name="04-B" type="txt">
+            ${new File(_runner.directory, 'file/a.txt').getText()}
+        </result-file>
+        <result-file name="04-B" type="txt">
+            ${_runner.include('file/a.txt', null)}
+        </result-file>
+<result-file name="04-B" type="txt">
+<% def a = 'Ejemplo' %>
+<% def a = 'Ejemplo' %>
+<% def a = 'Ejemplo' %>
+<% def a = 'Ejemplo' %>
+</result-file>
+    </result-group>
+</result-group>

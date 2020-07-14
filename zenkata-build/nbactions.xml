@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
     <action>
-        <actionName>CUSTOM-set-version</actionName>
-        <displayName>set-version</displayName>
+        <actionName>CUSTOM-version:set</actionName>
+        <displayName>version:set</displayName>
         <goals>
             <goal>versions:set</goal>
         </goals>
     </action>
     <action>
-        <actionName>CUSTOM-deploy</actionName>
-        <displayName>deploy</displayName>
+        <actionName>CUSTOM-maven:deploy</actionName>
+        <displayName>maven:deploy</displayName>
         <goals>
-            <goal>deploy</goal>
+            <goal>maven:deploy</goal>
+        </goals>
+    </action>
+    <action>
+        <actionName>CUSTOM-jaxb2:schemagen</actionName>
+        <displayName>jaxb2:schemagen</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>jaxb2:schemagen</goal>
         </goals>
     </action>
 </actions>

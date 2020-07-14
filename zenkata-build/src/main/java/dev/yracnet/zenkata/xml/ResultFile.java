@@ -21,21 +21,21 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 /**
  * <p>
- *  ResultFile element to write a file to the path:
- *  <i>[parent group path]</i>
- *  <b>/${module}/${layer}/${dir}/${pkg as directory}/${name}.${type}</b>
+ * ResultFile element to write a file to the path: <i>[parent group path]</i> <b>/${module}/${layer}/${dir}/${pkg as directory}/${name}.${type}</b>
  * </p>
  * 
  * <p>
- *  <b>[parent group path]</b> it depends if the element is wrapped in the result-group.
+ * <b>[parent group path]</b> it depends if the element is wrapped in the result-group.
  * </p>
  */
 @XmlRootElement(name = "result-file")
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlType
 @lombok.Getter
 @lombok.Setter
 @lombok.ToString(exclude = {"parent", "content", "comment"})
@@ -139,10 +139,5 @@ public class ResultFile implements Result {
 
 	public byte[] getCommentBytes() {
 		return comment == null ? null : comment.getBytes();
-	}
-
-	@Override
-	public boolean isSkip() {
-		return skip;
 	}
 }

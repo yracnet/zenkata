@@ -23,8 +23,6 @@ import dev.yracnet.zenkata.ResultReader;
 import dev.yracnet.zenkata.ResultWriter;
 import dev.yracnet.zenkata.ZenkataBuild;
 import dev.yracnet.zenkata.xml.ResultGroup;
-import dev.yracnet.formatter.FormatterBuild;
-import dev.yracnet.formatter.FormatterException;
 import groovy.lang.Writable;
 import groovy.text.Template;
 import java.io.File;
@@ -165,14 +163,14 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
 		} catch (ResultException e) {
 			LOGGER.log(Level.SEVERE, "Error write Result", e);
 		}
-		try {
-			FormatterBuild build = FormatterBuild.create();
-			build.setBasedir(output);
-			build.setDirectories(output);
-			build.execute();
-		} catch (FormatterException e) {
-			LOGGER.log(Level.SEVERE, "Error format Code", e);
-		}
+		// try {
+		// FormatterBuild build = FormatterBuild.create();
+		// build.setBasedir(output);
+		// build.setDirectories(output);
+		// build.execute();
+		// } catch (FormatterException e) {
+		// LOGGER.log(Level.SEVERE, "Error format Code", e);
+		// }
 		return result;
 	}
 

@@ -24,17 +24,23 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * <p>ResultGropup wrapped all element</p>
+ * <p>
+ * ResultGropup wrapped all element
+ * </p>
  * <i>[parent group path]</i><b>/${module}/${layer}/${dir}/${pkg as directory}/${name}.${type}</b>
- * <p>All elements will write to $ {module}/${layer}/${dir}/[result-file or result-group wrapped]</p>
+ * <p>
+ * All elements will write to $ {module}/${layer}/${dir}/[result-file or result-group wrapped]
+ * </p>
  */
 @XmlRootElement(name = "result-group")
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlType
 @Getter
 @Setter
 @ToString
@@ -75,26 +81,5 @@ public class ResultGroup implements Result {
 		if (result != null) {
 			resutlList.add(result);
 		}
-	}
-
-	@Override
-	public boolean isSkip() {
-		return skip;
-	}
-
-	public String getDir() {
-		return dir;
-	}
-
-	public String getParser() {
-		return parser;
-	}
-
-	public String getModule() {
-		return module;
-	}
-
-	public String getLayer() {
-		return layer;
 	}
 }

@@ -23,6 +23,9 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -47,12 +50,34 @@ public class ZenkataHelp {
 		URL url = loader.getResource(name);
 		return new String(Files.readAllBytes(Paths.get(url.toURI())));
 	}
-
+	private final static Pattern CONTENT_PATTERN = Pattern.compile("<([\\w:]*)result-file([^>]*)>((\\n|.)*?)<\\/([\\w:]*)result-file>");
+	private final static Pattern GROOVY_PATTERN = Pattern.compile("(<%((\\n|.)*?)%>)");
 	public static String processMaskXml(File file) throws EntryException {
 		try {
 			String xml = new String(Files.readAllBytes(Paths.get(file.toURI())));
-			xml = xml.replace("<%", "<!--<%");
-			xml = xml.replace("%>", "%>-->");
+			// expands tag result-file
+			xml = xml.replaceAll("<([\\w:]*)result-file([^>]*)\\/>", "<$1result-file$2></$1result-file>");
+			TreeMap<String, String> reference = new TreeMap<>();
+			int count[] = {0};
+			// detect groovy-script content
+			Matcher groovyMatcher = GROOVY_PATTERN.matcher(xml);
+			xml = groovyMatcher.replaceAll(matchResult -> {
+				String content = matchResult.group(1);
+				String key = String.format("REF-%010d-GROOVY", ++count[0]);
+				System.out.println(key + ":  " + content);
+				reference.put(key, content);
+				return "<!--" + key + "-->";
+			});
+			// detect refult-file content
+			Matcher contentMatcher = CONTENT_PATTERN.matcher(xml);
+			xml = contentMatcher.replaceAll(matchResult -> {
+				String content = matchResult.group(3);
+				String key = String.format("REF-%010d-CONTENT", ++count[0]);
+				System.out.println(key + ":  " + content);
+				reference.put(key, content);
+				return "<$1result-file$2><!--" + key + "--></$5result-file>";
+			});
+			// transform and validate xml
 			TransformerFactory factory = TransformerFactory.newInstance();
 			Source processMask = new StreamSource(ZenkataHelp.class.getResourceAsStream("/process-mask.xslt"));
 			StringWriter out = new StringWriter();
@@ -60,12 +85,21 @@ public class ZenkataHelp {
 			Source text = new StreamSource(new StringReader(xml));
 			transformer.transform(text, new StreamResult(out));
 			xml = out.toString();
+			// restore reference content
+			for (String key : reference.descendingKeySet()) {
+				String content = reference.get(key);
+				if (key.endsWith("-CONTENT")) {
+					boolean inCData = content.matches("^(\\s*)<!\\[CDATA\\[((\\n|.)*?)]]>(\\s*)$");
+					if (!inCData) {
+						content = "<![CDATA[" + content + "]]>";
+					}
+				}
+				key = "<!--" + key + "-->";
+				xml = xml.replace(key, content);
+			}
+			// replace custom CDATA
 			xml = xml.replace("--BEGIN-CDATA--", "<![CDATA[");
 			xml = xml.replace("--END-CDATA--", "]]>");
-			xml = xml.replace("--BEGIN-GROOVY--", "<%");
-			xml = xml.replace("--END-GROOVY--", "%>");
-			xml = xml.replace("<!--<%", "<%");
-			xml = xml.replace("%>-->", "%>");
 			return xml;
 		} catch (TransformerException | IOException e) {
 			throw new EntryException("Error mask xml", e);

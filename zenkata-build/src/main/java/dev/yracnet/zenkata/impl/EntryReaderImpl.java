@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,13 +63,14 @@ public class EntryReaderImpl implements EntryReader {
 
 	@Override
 	public List<EntryMask> readMaskRecursive(String name) {
-		LOGGER.log(Level.INFO, "ADD MASK NAME {0}", name);
+		LOGGER.log(Level.INFO, "ADD MASK DIR: {0}", name);
 		File dir = searchFirstFile(name);
 		List<EntryMask> list = new ArrayList<>();
 		if (dir != null && dir.isDirectory()) {
-			File files[] = dir.listFiles(it -> it.isFile());
+			File files[] = dir.listFiles(it -> it.isFile() && it.getName().endsWith(".xml"));
+			Arrays.sort(files);
 			for (File file : files) {
-				LOGGER.log(Level.INFO, "ADD MASK {0}", file);
+				LOGGER.log(Level.INFO, "ADD MASK FILE: {0}", file);
 				EntryMask mask = createMask(file);
 				list.add(mask);
 			}
@@ -85,6 +87,8 @@ public class EntryReaderImpl implements EntryReader {
 				Template template = engine.createTemplate(xml);
 				mask.setTemplate(template);
 			} catch (EntryException | IOException | ClassNotFoundException | CompilationFailedException e) {
+				LOGGER.log(Level.INFO, "ERROR MASK FILE: {0}: {1}", new Object[]{file, e.getMessage()});
+				LOGGER.log(Level.SEVERE, null, e);
 				// mask.setException(e);
 			}
 		}

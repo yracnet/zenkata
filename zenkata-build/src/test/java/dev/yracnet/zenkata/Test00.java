@@ -25,7 +25,7 @@ public class Test00 extends TestBase {
 		root.addResult(file);
 		root.addResult(file);
 		String xmlResult = marshallerResult(root);
-                System.out.println("-->" +xmlResult);
+		System.out.println("-->" + xmlResult);
 		assertXmlFile(xmlResult, "assert/Test00/simple.xml");
 	}
 
@@ -46,6 +46,7 @@ public class Test00 extends TestBase {
 		root.addResult(g1);
 		root.addResult(g2);
 		String xmlResult = marshallerResult(root);
+		System.out.println("-->" + xmlResult);
 		assertXmlFile(xmlResult, "assert/Test00/grupo.xml");
 	}
 }
