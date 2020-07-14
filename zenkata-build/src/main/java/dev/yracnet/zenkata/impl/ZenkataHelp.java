@@ -64,7 +64,6 @@ public class ZenkataHelp {
 			xml = groovyMatcher.replaceAll(matchResult -> {
 				String content = matchResult.group(1);
 				String key = String.format("REF-%010d-GROOVY", ++count[0]);
-				System.out.println(key + ":  " + content);
 				reference.put(key, content);
 				return "<!--" + key + "-->";
 			});
@@ -73,7 +72,6 @@ public class ZenkataHelp {
 			xml = contentMatcher.replaceAll(matchResult -> {
 				String content = matchResult.group(3);
 				String key = String.format("REF-%010d-CONTENT", ++count[0]);
-				System.out.println(key + ":  " + content);
 				reference.put(key, content);
 				return "<$1result-file$2><!--" + key + "--></$5result-file>";
 			});
