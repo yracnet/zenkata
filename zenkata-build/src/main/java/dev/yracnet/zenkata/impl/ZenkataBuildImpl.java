@@ -202,6 +202,8 @@ public class ZenkataBuildImpl extends ZenkataBuild implements Serializable {
 			LOGGER.log(Level.FINE, "processMask: Result: {0}", temp);
 			result.addResult(temp);
 		} catch (ResultException e) {
+			LOGGER.log(Level.WARNING, "processMask: Exception Result: {0} : {1}", new Object[]{mask.getFile(), e});
+		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, "processMask: Exception Result: {0} : {1}", new Object[]{mask.getFile(), e});
 		}
 	}

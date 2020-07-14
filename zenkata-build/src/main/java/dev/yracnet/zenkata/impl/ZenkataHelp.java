@@ -50,13 +50,19 @@ public class ZenkataHelp {
 		URL url = loader.getResource(name);
 		return new String(Files.readAllBytes(Paths.get(url.toURI())));
 	}
-	private final static Pattern CONTENT_PATTERN = Pattern.compile("<([\\w:]*)result-file([^>]*)>((\\n|.)*?)<\\/([\\w:]*)result-file>");
-	private final static Pattern GROOVY_PATTERN = Pattern.compile("(<%((\\n|.)*?)%>)");
+	private static final Pattern SIMPLE_PATTERN = Pattern.compile("<result-file([^>]*)\\/>", Pattern.DOTALL);
+	private static final Pattern GROOVY_PATTERN = Pattern.compile("(<%([^%>]*)%>)", Pattern.DOTALL);
+	private static final Pattern CONTENT_PATTERN = Pattern.compile("<result-file([^>]*)>(.*?)<\\/result-file>", Pattern.DOTALL);
+	private static final Pattern CDATA_PATTERN = Pattern.compile("^(\\s*)<!\\[CDATA\\[(.*?)]]>(\\s*)$", Pattern.DOTALL);
 	public static String processMaskXml(File file) throws EntryException {
 		try {
 			String xml = new String(Files.readAllBytes(Paths.get(file.toURI())));
 			// expands tag result-file
-			xml = xml.replaceAll("<([\\w:]*)result-file([^>]*)\\/>", "<$1result-file$2></$1result-file>");
+			Matcher simpleMatcher = SIMPLE_PATTERN.matcher(xml);
+			xml = simpleMatcher.replaceAll(matchResult -> {
+				String params = matchResult.group(1);
+				return "<result-file" + params + "></result-file>";
+			});
 			TreeMap<String, String> reference = new TreeMap<>();
 			int count[] = {0};
 			// detect groovy-script content
@@ -70,10 +76,10 @@ public class ZenkataHelp {
 			// detect refult-file content
 			Matcher contentMatcher = CONTENT_PATTERN.matcher(xml);
 			xml = contentMatcher.replaceAll(matchResult -> {
-				String content = matchResult.group(3);
+				String content = matchResult.group(2);
 				String key = String.format("REF-%010d-CONTENT", ++count[0]);
 				reference.put(key, content);
-				return "<$1result-file$2><!--" + key + "--></$5result-file>";
+				return "<result-file$1><!--" + key + "--></result-file>";
 			});
 			// transform and validate xml
 			TransformerFactory factory = TransformerFactory.newInstance();
@@ -87,7 +93,7 @@ public class ZenkataHelp {
 			for (String key : reference.descendingKeySet()) {
 				String content = reference.get(key);
 				if (key.endsWith("-CONTENT")) {
-					boolean inCData = content.matches("^(\\s*)<!\\[CDATA\\[((\\n|.)*?)]]>(\\s*)$");
+					boolean inCData = CDATA_PATTERN.matcher(content).find();
 					if (!inCData) {
 						content = "<![CDATA[" + content + "]]>";
 					}
