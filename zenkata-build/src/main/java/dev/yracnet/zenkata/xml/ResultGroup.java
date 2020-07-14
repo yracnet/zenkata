@@ -29,8 +29,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- *
- * @author Willyams Yujra
+ * <p>ResultGropup wrapped all element</p>
+ * <i>[parent group path]</i><b>/${module}/${layer}/${dir}/${pkg as directory}/${name}.${type}</b>
+ * <p>All elements will write to $ {module}/${layer}/${dir}/[result-file or result-group wrapped]</p>
  */
 @XmlRootElement(name = "result-group")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -38,14 +39,29 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ResultGroup implements Result {
+	/**
+	 * Skip write result-file or result-group
+	 */
 	@XmlAttribute(name = "skip")
 	private boolean skip;
+	/**
+	 * Parse Name for files group
+	 */
 	@XmlAttribute(name = "parser")
 	private String parser;
+	/**
+	 * Module Name for files group
+	 */
 	@XmlAttribute(name = "module")
 	private String module;
+	/**
+	 * Layer Name for files group
+	 */
 	@XmlAttribute(name = "layer")
 	private String layer;
+	/**
+	 * Parent Directory for files group
+	 */
 	@XmlAttribute(name = "dir")
 	private String dir;
 	@XmlElements({@XmlElement(name = "result-group", type = ResultGroup.class),
@@ -59,5 +75,26 @@ public class ResultGroup implements Result {
 		if (result != null) {
 			resutlList.add(result);
 		}
+	}
+
+	@Override
+	public boolean isSkip() {
+		return skip;
+	}
+
+	public String getDir() {
+		return dir;
+	}
+
+	public String getParser() {
+		return parser;
+	}
+
+	public String getModule() {
+		return module;
+	}
+
+	public String getLayer() {
+		return layer;
 	}
 }

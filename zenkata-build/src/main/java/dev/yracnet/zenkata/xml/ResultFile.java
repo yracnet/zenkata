@@ -22,11 +22,17 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- *
- * @author Willyams Yujra
+ * <p>
+ *  ResultFile element to write a file to the path:
+ *  <i>[parent group path]</i>
+ *  <b>/${module}/${layer}/${dir}/${pkg as directory}/${name}.${type}</b>
+ * </p>
+ * 
+ * <p>
+ *  <b>[parent group path]</b> it depends if the element is wrapped in the result-group.
+ * </p>
  */
 @XmlRootElement(name = "result-file")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -36,28 +42,64 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class ResultFile implements Result {
 	@XmlTransient
 	private ResultGroup parent;
+	/**
+	 * Skip write file
+	 */
 	@XmlAttribute(name = "skip")
 	private boolean skip;
+	/**
+	 * Parse Name for file
+	 */
 	@XmlAttribute(name = "parser")
 	private String parser;
+	/**
+	 * Module Name
+	 */
 	@XmlAttribute(name = "module")
 	private String module;
+	/**
+	 * Layer Name
+	 */
 	@XmlAttribute(name = "layer")
 	private String layer;
+	/**
+	 * Directory File
+	 */
 	@XmlAttribute(name = "dir")
 	private String dir;
+	/**
+	 * Package File (if is java file)
+	 */
 	@XmlAttribute(name = "pkg")
 	private String pkg;
-	@XmlAttribute(name = "name")
+	/**
+	 * Name File
+	 */
+	@XmlAttribute(name = "name", required = true)
 	private String name;
-	@XmlAttribute(name = "type")
+	/**
+	 * Type File - Extension
+	 */
+	@XmlAttribute(name = "type", required = true)
 	private String type;
+	/**
+	 * Append content if exist File
+	 */
 	@XmlAttribute(name = "append")
 	private boolean append;
+	/**
+	 * Append comment on File
+	 */
 	@XmlAttribute(name = "comment")
 	private String comment;
+	/**
+	 * Include content from other file
+	 */
 	@XmlAttribute(name = "include")
 	private String include;
+	/**
+	 * Content File
+	 */
 	@XmlValue
 	private String content;
 	public String getResultPath() {
@@ -97,5 +139,10 @@ public class ResultFile implements Result {
 
 	public byte[] getCommentBytes() {
 		return comment == null ? null : comment.getBytes();
+	}
+
+	@Override
+	public boolean isSkip() {
+		return skip;
 	}
 }
