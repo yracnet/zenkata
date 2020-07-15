@@ -34,10 +34,12 @@ public class ResultParserImpl implements ResultParser {
 		if ("java".equals(type)) {
 			String content = item.getContent();
 			content = content == null ? "<!-- ERROR -->" : content.trim();
-			content = "package " + item.getPkg() + ";\n\n" + content;
+			if (!item.isAppend()) {
+				content = "package " + item.getPkg() + ";\n\n" + content;
+			}
 			item.setContent(content);
 		}
-		if ("xml".equals(type)) {
+		if ("xml".equals(type) || "xhtml".equals(type) || "html".equals(type)) {
 			String content = item.getContent();
 			content = content == null ? "<!-- ERROR -->" : content.trim();
 			item.setContent(content);
